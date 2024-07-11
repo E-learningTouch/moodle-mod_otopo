@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="mod/otopo/db" VERSION="2023021600" COMMENT="XMLDB file for Moodle mod/otopo"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="otopo" COMMENT="Defines otopo activity">
+      <FIELDS>
+          <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true"/>
+          <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" />
+          <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" />
+          <FIELD NAME="intro" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" />
+          <FIELD NAME="introformat" TYPE="int" LENGTH="4" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" />
+          <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" />
+          <FIELD NAME="showteachercomments" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="1" SEQUENCE="false"/>
+          <FIELD NAME="session" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="1" SEQUENCE="false"/>
+          <FIELD NAME="sessions" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false"/>
+          <FIELD NAME="limit_sessions" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false"/>
+          <FIELD NAME="grade" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="true" SEQUENCE="false" COMMENT="The maximum grade for this otopo. 0 = disabled"/>
+          <FIELD NAME="gradeonlyforteacher" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+          <FIELD NAME="allowsubmissionfromdate" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="If set, submissions will only be accepted after this date."/>
+          <FIELD NAME="allowsubmissiontodate" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="If set, submissions will only be accepted before this date."/>
+          <FIELD NAME="sessionvisual" TYPE="int" LENGTH="2" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" />
+          <FIELD NAME="cohortvisual" TYPE="int" LENGTH="2" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" />
+          <FIELD NAME="completionsubmit" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="If this field is set to 1, then the activity will be automatically marked as 'complete' once the user submits their otopo (session enabled : last session completed, session disabled : at least one session submitted)."/>
+          <FIELD NAME="event_start" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false"/>
+          <FIELD NAME="event_end" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="course" UNIQUE="false" FIELDS="course"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="otopo_session" COMMENT="Defines otopo session">
+      <FIELDS>
+          <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true"/>
+          <FIELD NAME="otopo" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" />
+          <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" />
+          <FIELD NAME="color" TYPE="char" LENGTH="7" NOTNULL="true" DEFAULT="#000000" SEQUENCE="false"/>
+          <FIELD NAME="allowsubmissionfromdate" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="If set, submissions will only be accepted after this date."/>
+          <FIELD NAME="allowsubmissiontodate" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="If set, submissions will only be accepted before this date."/>
+          <FIELD NAME="event_start" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false"/>
+          <FIELD NAME="event_end" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="otopo" UNIQUE="false" FIELDS="otopo"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="otopo_template" COMMENT="Defines otopo template">
+        <FIELDS>
+            <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true"/>
+            <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" />
+        </FIELDS>
+        <KEYS>
+            <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        </KEYS>
+    </TABLE>
+    <TABLE NAME="otopo_item" COMMENT="Defines otopo item">
+      <FIELDS>
+          <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true"/>
+          <FIELD NAME="otopo" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" />
+          <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" />
+          <FIELD NAME="color" TYPE="char" LENGTH="7" NOTNULL="true" DEFAULT="#000000" SEQUENCE="false"/>
+          <FIELD NAME="ord" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+          <INDEX NAME="otopo" UNIQUE="false" FIELDS="otopo"/>
+          <INDEX NAME="ord" UNIQUE="false" FIELDS="ord"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="otopo_item_degree" COMMENT="Defines otopo item degree">
+        <FIELDS>
+            <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true"/>
+            <FIELD NAME="item" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" />
+            <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" />
+            <FIELD NAME="description" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" />
+            <FIELD NAME="grade" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="true" SEQUENCE="false" COMMENT="The grade for this degree."/>
+            <FIELD NAME="ord" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" />
+        </FIELDS>
+        <KEYS>
+            <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        </KEYS>
+        <INDEXES>
+            <INDEX NAME="item" UNIQUE="false" FIELDS="item"/>
+            <INDEX NAME="ord" UNIQUE="false" FIELDS="ord"/>
+        </INDEXES>
+    </TABLE>
+    <TABLE NAME="otopo_user_otopo" COMMENT="Defines otopo user otopo">
+        <FIELDS>
+            <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true"/>
+            <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false"/>
+            <FIELD NAME="session" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" />
+            <FIELD NAME="item" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" />
+            <FIELD NAME="degree" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" />
+            <FIELD NAME="justification" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" />
+            <FIELD NAME="lastmodificationdate" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" />
+            <FIELD NAME="teacher_comment" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" />
+        </FIELDS>
+        <KEYS>
+            <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        </KEYS>
+        <INDEXES>
+            <INDEX NAME="userid" UNIQUE="false" FIELDS="userid"/>
+            <INDEX NAME="item" UNIQUE="false" FIELDS="item"/>
+            <INDEX NAME="session" UNIQUE="false" FIELDS="session"/>
+            <INDEX NAME="unique_index" UNIQUE="true" FIELDS="userid,item,session"/>
+        </INDEXES>
+    </TABLE>
+    <TABLE NAME="otopo_user_valid_session" COMMENT="Defines otopo user otopo">
+        <FIELDS>
+            <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true"/>
+            <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false"/>
+            <FIELD NAME="session" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" />
+            <FIELD NAME="otopo" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" />
+        </FIELDS>
+        <KEYS>
+            <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        </KEYS>
+        <INDEXES>
+            <INDEX NAME="userid" UNIQUE="false" FIELDS="userid"/>
+            <INDEX NAME="otopo" UNIQUE="false" FIELDS="otopo"/>
+            <INDEX NAME="session" UNIQUE="false" FIELDS="session"/>
+            <INDEX NAME="unique_index" UNIQUE="true" FIELDS="userid,session,otopo"/>
+        </INDEXES>
+    </TABLE>
+    <TABLE NAME="otopo_grader" COMMENT="Defines otopo teacher grade">
+        <FIELDS>
+            <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true"/>
+            <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false"/>
+            <FIELD NAME="session" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" />
+            <FIELD NAME="otopo" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" />
+            <FIELD NAME="comment" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" />
+            <FIELD NAME="grade" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" COMMENT="The grade for this session/user"/>
+        </FIELDS>
+        <KEYS>
+            <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        </KEYS>
+        <INDEXES>
+            <INDEX NAME="userid" UNIQUE="false" FIELDS="userid"/>
+            <INDEX NAME="otopo" UNIQUE="false" FIELDS="otopo"/>
+            <INDEX NAME="session" UNIQUE="false" FIELDS="session"/>
+            <INDEX NAME="unique_index" UNIQUE="true" FIELDS="userid,session,otopo"/>
+        </INDEXES>
+    </TABLE>
+  </TABLES>
+</XMLDB>

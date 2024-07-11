@@ -1,0 +1,85 @@
+{{!
+    This file is part of Moodle - https://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template mod_otopo/templates_page
+
+    The template HTML for templates page.
+}}
+{{#template}}
+    <a href="{{config.wwwroot}}/mod/otopo/templates.php{{#cmid}}?cmid={{cmid}}{{/cmid}}">< {{#str}} returntolist, otopo {{/str}}</a>
+    {{#edit}}
+    <div class="mt-2">
+        {{{form}}}
+    </div>
+    <a class="btn btn-primary mt-2" data-toggle="collapse" href="#collapseGrid" role="button" aria-expanded="false" aria-controls="collapseGrid">{{#str}} gridcreateitem, otopo {{/str}}</a>
+    <div class="collapse mt-3" id="collapseGrid">
+        <div class="card card-body">
+            <div id="otopo-grid"></div>
+        </div>
+        <div class="d-flex flex-row justify-content-end mt-2">
+            <a class="btn btn-primary ml-1 mr-1" href="{{config.wwwroot}}/mod/otopo/templates.php?id={{template.id}}{{#cmid}}&cmid={{cmid}}{{/cmid}}">{{#str}} save {{/str}}</a>
+        </div>
+    </div>
+{{/edit}}
+
+{{^edit}}
+    <h2 class="text-center mb-3">{{ template.name }}</h2>
+    {{> mod_otopo/grids_table }}
+    <div class="d-flex flex-row justify-content-end">
+        <a class="btn btn-default ml-1 mr-1" href="{{config.wwwroot}}/mod/otopo/templates.php?id={{template.id}}&action=export{{#cmid}}&cmid={{cmid}}{{/cmid}}">{{#str}} exportascsv, otopo {{/str}}</a>
+        <a class="btn btn-danger ml-1 mr-1" href="{{config.wwwroot}}/mod/otopo/templates.php?id={{template.id}}&action=delete{{#cmid}}&cmid={{cmid}}{{/cmid}}">{{#str}} delete {{/str}}</a>
+        <a class="btn btn-primary ml-1 mr-1" href="{{config.wwwroot}}/mod/otopo/templates.php?id={{template.id}}&action=edit{{#cmid}}&cmid={{cmid}}{{/cmid}}">{{#str}} edit {{/str}}</a>
+    </div>
+{{/edit}}
+{{/template}}
+
+{{^template}}
+{{#create}}
+{{{form}}}
+{{/create}}
+
+{{^create}}
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">{{#str}} name {{/str}}</th>
+                    <th scope="col">{{#str}} actions {{/str}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#templates}}
+                    <tr>
+                        <td>{{ name }}</td>
+                        <td>
+                            <div class="d-flex flex-row justify-content-start">
+                                <a class="btn btn-default ml-1 mr-1" href="{{config.wwwroot}}/mod/otopo/templates.php?id={{id}}&action=export{{#cmid}}&cmid={{cmid}}{{/cmid}}">{{#str}} exportascsv, otopo {{/str}}</a>
+                                <a class="btn btn-danger ml-1 mr-1" href="{{config.wwwroot}}/mod/otopo/templates.php?id={{id}}&action=delete{{#cmid}}&cmid={{cmid}}{{/cmid}}">{{#str}} delete {{/str}}</a>
+                                <a class="btn btn-default ml-1 mr-1" href="{{config.wwwroot}}/mod/otopo/templates.php?id={{id}}{{#cmid}}&cmid={{cmid}}{{/cmid}}">{{#str}} preview {{/str}}</a>
+                                <a class="btn btn-primary ml-1 mr-1" href="{{config.wwwroot}}/mod/otopo/templates.php?id={{id}}&action=edit{{#cmid}}&cmid={{cmid}}{{/cmid}}">{{#str}} edit {{/str}}</a>
+                            </div>
+                        </td>
+                    </tr>
+                {{/templates}}
+            </tbody>
+        </table>
+    </div>
+    <div class="d-flex flex-row justify-content-end mt-2">
+        <a class="btn btn-primary ml-1 mr-1" href="{{config.wwwroot}}/mod/otopo/templates.php?action=create{{#cmid}}&cmid={{cmid}}{{/cmid}}">{{#str}} create {{/str}}</a>
+    </div>
+{{/create}}
+{{/template}}

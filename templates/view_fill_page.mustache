@@ -1,0 +1,335 @@
+{{!
+    This file is part of Moodle - https://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template mod_otopo/view_fill_page
+
+    The template HTML for the view fill page.
+}}
+{{#actionok}}
+<div class="no-print mb-3">
+    <div class="bar-up">
+        <div class="d-flex align-items-center">
+            <img class="img-responsive" src="{{ imagemrotopo }}" alt="Mr otopo" />
+            <h2 class="bar-title otopo">OTOPO</h2>
+            <h1 class="otopo ml-auto">
+                {{#progress}}{{#str}} fillmyprogression, otopo {{/str}}{{/progress}}
+                {{#evolution}}{{#str}} fillmyevolution, otopo {{/str}}{{/evolution}}
+                {{#evaluate}}{{displayname}}{{/evaluate}}
+            </h1>
+        </div>
+    </div>
+    <div class="bar-down bg-otopo rounded-bottom">
+        <div class="row align-items-center">
+            <div class="col-lg-4 col-md-6">
+                <ul class="left-menu d-flex justify-content-between">
+                    <li class="nav-item">
+                        <a href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=progress">
+                            <div class="d-flex flex-column align-items-center">
+                                <div class="bar-icon">
+                                    <i class="fa fa-home fa-fw " title="home" aria-label="home"></i>
+                                </div>
+                                <div class="bar-menu-title">
+                                    <h3>{{#str}} fillmyprogression, otopo {{/str}}</h3>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=evolution">
+                            <div class="d-flex flex-column align-items-center">
+                                <div class="bar-icon">
+                                    <i class="fa fa-star fa-fw " title="home" aria-label="home"></i>
+                                </div>
+                                <div class="bar-menu-title">
+                                    <h3>{{#str}} fillmyevolution, otopo {{/str}}</h3>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" data-toggle="modal" data-target="#gridModal">
+                            <div class="d-flex flex-column align-items-center">
+                                <div class="bar-icon">
+                                    <i class="fa fa-sticky-note fa-fw " title="home" aria-label="home"></i>
+                                </div>
+                                <div class="bar-menu-title">
+                                    <h3>{{#str}} fillmygrid, otopo {{/str}}</h3>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-4">
+                <div class="flex-column avatar d-none d-sm-none d-md-none d-lg-flex">
+                    <div class="d-flex justify-content-center">
+                        <div class="rounded-circle">
+                            {{{avatar}}}
+                        </div>
+                    </div>
+                    <h4 class="text-center">{{ fullname }}</h4>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="d-flex flex-column justify-content-center h-100">
+                    <div class="d-flex justify-content-end">
+                        {{> mod_otopo/session-info }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="only-print">
+    <div class="d-flex flex-column align-items-center mb-4">
+        <img width="100px" src="{{ imagemrotopo }}" alt="Mr otopo" />
+        <h1 class="bar-title otopo">OTOPO</h1>
+        <h4 class="text-center">{{ fullname }}</h4>
+        <h2 class="otopo">
+            {{#progress}}{{#str}} fillmyprogression, otopo {{/str}}{{/progress}}
+            {{#evolution}}{{#str}} fillmyevolution, otopo {{/str}}{{/evolution}}
+            {{#evaluate}}{{displayname}}{{/evaluate}}
+        </h2>
+        {{> mod_otopo/session-info }}
+    </div>
+</div>
+
+<div class="row fill-content">
+    <div class="col-md-12">
+        {{#progress}}
+            {{^showotopos}}
+                <div class="row d-flex justify-content-center">
+                    <div class="col-lg-6 col-md-10">
+                        <p>{{#str}} fillintro, otopo {{/str}}</p>
+                        <p>{{#str}} fillencouragement, otopo {{/str}}</p>
+                        {{#currentsessionavailable}}
+                            {{#isopen}}
+                        <div class="d-flex justify-content-center">
+                            <a class="btn-otopo" href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=evaluate">{{#str}} fill, otopo {{/str}}</a>
+                        </div>
+                            {{/isopen}}
+                        {{/currentsessionavailable}}
+                        {{^isopen}}
+                            <div class="d-flex justify-content-center">
+                                <p class="font-weight-bold">{{#str}} activityclosed, otopo {{/str}}</p>
+                            </div>
+                        {{/isopen}}
+                        {{#isopen}}
+                            {{^currentsessionavailable}}
+                                <div class="d-flex justify-content-center">
+                                    <p class="font-weight-bold">{{#str}} nosessionavailable, otopo {{/str}}</p>
+                                </div>
+                            {{/currentsessionavailable}}
+                        {{/isopen}}
+
+                    </div>
+                </div>
+            {{/showotopos}}
+
+            {{#showotopos}}
+                <div class="otopo-per-session otopo-sessions-list mb-3">
+                    <hr class="otopo-separator">
+                    <div class="row text-nowrap">
+                        {{#sessions}}
+                            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                                <h5 class="text-center otopo font-weight-bold"><a class="otopo" href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=evaluate&session={{id}}">{{displayname}}{{^last}} >{{/last}}</a></h5>
+                            </div>
+                        {{/sessions}}
+                    </div>
+                    <hr class="otopo-separator">
+                    <div class="row text-nowrap">
+                        {{#sessions}}
+                            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                                <div class="lock-icon">
+                                        <i class="otopo fa {{#isvalidorclosed}}fa-lock{{/isvalidorclosed}}{{^isvalidorclosed}}fa-unlock{{/isvalidorclosed}}"></i>
+                                </div>
+                            </div>
+                        {{/sessions}}
+                    </div>
+                </div>
+                {{#items}}
+                    <div class="otopo-per-session">
+                        <h4 class="text-center font-weight-bold" style="color: {{ color }}">{{ name }}</h4>
+                        <div class="row mb-3">
+                            {{#results}}
+                                <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                                    {{#width}}
+                                        <div class="d-flex flex-column justify-content-center degree-star-container">
+                                            <div class="d-flex flex-row align-items-center justify-content-center">
+                                                <div class="d-flex align-items-center justify-content-center degree-container">
+                                                    <div
+                                                        class="degree-star-mask"
+                                                        style="width: {{ width }}%; -webkit-mask-image: url({{ star }}); mask-image: url({{ star }});"
+                                                    >
+                                                        <div style="background-color: {{ itemColor }}; background: rgb(255,255,255); background: linear-gradient(90deg, rgba(255,255,255,1) 0%, {{ itemColor }} 100%);">
+                                                            <img src="{{ starcontainer }}" class="img-responsive invisible" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {{/width}}
+                                    <div class="d-flex flex-row justify-content-center degree-background-container">
+                                        <div class="d-flex align-items-center justify-content-center degree-container">
+                                            <img src="{{starcontainer}}" class="img-responsive {{^degree}}img-darker{{/degree}}" />
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        <div class="degree-action degree-action-bottom">
+                                            <a onclick="event.preventDefault()" href="#" {{#degree}}data-toggle="modal" data-target="#modal{{id}}"{{/degree}}{{^degree}}style="cursor: default;"{{/degree}}><img src="{{ help }}" class="img-responsive {{^degree}}invisible{{/degree}}" /></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{! TODO Seems unused? }}
+                                {{#degree}}
+                                <div class="modal fade" id="modal{{id}}" tabindex="-1" tabindex="-1" role="dialog" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-content rounded">
+                                            <div class="modal-header rounded-top">
+                                                <h5 class="modal-title font-weight-bold">{{displayname}}</h5>
+                                                <button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close">
+                                                    <i class="icon fa fa-times-circle" aria-hidden="true"></i>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body rounded-bottom otopo">
+                                                <h5 class="font-weight-bold" style="color: {{ itemColor}};">{{ itemName }}</h5>
+                                                <h6 class="font-weight-bold">{{#str}}autoevaldegree, otopo{{/str}}  {{ rank }}</h6>
+                                                <p>{{ degree.name }}</p>
+                                                <h6 class="font-weight-bold">{{#str}} description, otopo {{/str}}</h6>
+                                                <p>{{ degree.description }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{/degree}}
+                            {{/results}}
+                        </div>
+                    </div>
+                {{/items}}
+            {{/showotopos}}
+        {{/progress}}
+
+        {{#evolution}}
+            <div class="no-print mb-3">
+                <div class="row">
+                    <div class="col-sm-6 d-flex justify-content-center align-items-center">
+                        <label class="m-0 mr-2" for="id_visual">{{#str}}evolutionchoosevisual, otopo{{/str}}</label>
+                        <select class="custom-select" name="visual" id="id_visual">
+                            <option value="radar" {{#visualradar}}selected=""{{/visualradar}}>
+                                {{#str}}radar, otopo{{/str}}
+                            </option>
+                            <option value="bar" {{#visualbar}}selected=""{{/visualbar}}>
+                                {{#str}}bar, otopo{{/str}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-sm-6 d-flex justify-content-center align-items-center">
+                        <label class="m-0 mr-2" for="id_item">{{#str}}evolutionperitem, otopo{{/str}}</label>
+                        <select class="custom-select" name="item" id="id_item">
+                            <option value="">{{#str}}chooseall, otopo{{/str}}</option>
+                            {{#items}}
+                                <option value="{{id}}">{{#shortentext}} 36, {{name}}{{/shortentext}}</option>
+                            {{/items}}
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div id="evolution" data-star="{{star}}">
+            </div>
+
+        {{/evolution}}
+
+        {{#evaluate}}
+            <div class="otopo-evaluate-header mb-3 no-print">
+                <div class="row">
+                    <div class="col-md-4 ">
+                        <h5 class="text-center font-weight-bold otopo">{{#str}} autoevalassessing, otopo {{/str}}</h5>
+                    </div>
+                    <div class="{{#otopo.showteachercomments}}col-md-4{{/otopo.showteachercomments}}{{^otopo.showteachercomments}}col-md-8{{/otopo.showteachercomments}}">
+                        <h5 class="text-center font-weight-bold otopo">{{#str}} autoevaljustify, otopo {{/str}}</h5>
+                    </div>
+                    {{#otopo.showteachercomments}}
+                    <div class="col-md-4">
+                        <h5 class="text-center font-weight-bold otopo">{{#str}} autoevalcomments, otopo {{/str}}</h5>
+                    </div>
+                    {{/otopo.showteachercomments}}
+                </div>
+            </div>
+            <div id="evaluate"></div>
+            <div class="d-flex justify-content-end">
+                <a class="btn-otopo ml-5 mr-2 no-print" href="#" onclick="window.print()">{{#str}} print, otopo {{/str}}</a>
+                <a class="btn-otopo ml-2 mr-2 no-print" href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=progress">{{#str}} save {{/str}}</a>
+                <a class="btn-otopo ml-2 mr-5 no-print" href="#" data-toggle="modal" data-target="#validateModal">{{#str}} validate, otopo {{/str}}</a>
+            </div>
+
+            <div class="modal fade" id="validateModal" tabindex="-1" role="dialog" aria-labelledby="validateModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">{{#str}} validate, otopo {{/str}}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            {{#str}}validate_help, otopo{{/str}}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">{{#str}}cancel{{/str}}</button>
+                            <a class="btn btn-primary" href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=validate&session={{sessionid}}">{{#str}} validate, otopo {{/str}}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{/evaluate}}
+    </div>
+</div>
+
+{{/actionok}}
+
+<div class="modal fade" id="gridModal" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{#str}} fillmygrid, otopo {{/str}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {{> mod_otopo/grids_table }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+ var bars = document.querySelectorAll( ".otopo-per-session > .row" );
+ bars.forEach((bar) => {
+     bar.addEventListener('scroll', (e) => {
+         bars.forEach((bar2) => {
+             if (bar2 != bar) {
+                 bar2.scrollLeft = bar.scrollLeft;
+             }
+         });
+     });
+     bar.scrollLeft = bar.scrollLeftMax;
+ });
+
+</script>

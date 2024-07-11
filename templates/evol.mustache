@@ -1,0 +1,145 @@
+{{!
+    This file is part of Moodle - https://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template mod_otopo/evol
+}}
+{{#currentchart}}
+    <div>
+        <h4 style="color: {{currentchart.color}};" class="text-center font-weight-bold">{{ currentchart.label }}</h4>
+        {{#allowsubmissionfromdate}}
+            <p>
+                {{ allowsubmissionfromdate }} {{#allowsubmissiontodate}}/ {{ allowsubmissiontodate }}{{/allowsubmissiontodate}}
+            </p>
+        {{/allowsubmissionfromdate}}
+        <div class="row">
+            <div class="col-md-8">
+                <div class="mb-3 shadow rounded p-2">
+                    <canvas id="currentChart"></canvas>
+                </div>
+            </div>
+            <div class="col-md-4">
+                {{#currentchart.grade}}
+                    <div class="d-flex flex-row align-items-center justify-content-center">
+                        <div class="grade-show">
+                            <p class="text-center"><b>{{currentchart.grade}}</b></p>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-center" style="width: 60%;">
+                            <div
+                                class="degree-star-mask"
+                                style="width: 100%; -webkit-mask-image: url({{ star }}); mask-image: url({{ star }});"
+                            >
+                                <div style="background-color: #f3da58;;">
+                                    <img src="{{ star }}" class="img-responsive invisible" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {{/currentchart.grade}}
+                {{#currentchart.comment}}
+                    <div class="shadow rounded p-2 bg-white">
+                        <p>
+                            <b>{{#str}} teachercommentglobal, otopo {{/str}} :</b><br>
+                            {{{ currentchart.comment }}}
+                        </p>
+                    </div>
+                {{/currentchart.comment}}
+            </div>
+        </div>
+    </div>
+{{/currentchart}}
+
+{{#hascharts}}
+    <div class="charts-print">
+        <h4 class="otopo text-center font-weight-bold">{{#str}} autoevalsvalidated, otopo {{/str}}</h4>
+        {{#charts}}
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="mb-3 shadow rounded p-2">
+                        {{#label}}<h5 style="color: {{color}};" class="text-center font-weight-bold">{{label}}</h5>{{/label}}
+                        {{#allowsubmissionfromdate}}
+                            <p>
+                                {{ allowsubmissionfromdate }} / {{ allowsubmissiontodate }}
+                            </p>
+                        {{/allowsubmissionfromdate}}
+                        <canvas id="chart{{id}}"></canvas>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    {{#grade}}
+                        <div class="d-flex flex-row align-items-center justify-content-center">
+                            <div class="grade-show">
+                                <p class="text-center"><b>{{grade}}</b></p>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-center" style="width: 60%;">
+                                <div
+                                    class="degree-star-mask"
+                                    style="width: 100%; -webkit-mask-image: url({{ star }}); mask-image: url({{ star }});"
+                                >
+                                    <div style="background-color: #f3da58;;">
+                                        <img src="{{ star }}" class="img-responsive invisible" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {{/grade}}
+                    {{#comment}}
+                        <div class="shadow rounded p-2 bg-white">
+                            <p>
+                                <b>{{#str}} teachercommentglobal, otopo {{/str}} :</b><br>
+                                {{{ comment }}}
+                            </p>
+                        </div>
+                    {{/comment}}
+                </div>
+            </div>
+        {{/charts}}
+    </div>
+{{/hascharts}}
+
+{{#chartitem}}
+    <div>
+        <h4 style="color: {{chartitem.color}};" class="text-center font-weight-bold">{{ chartitem.label }}</h4>
+        <div class="mb-3 shadow rounded p-2">
+            <canvas id="chartItem"></canvas>
+        </div>
+    </div>
+
+    {{#chartitemdegrees}}
+        <h5 class="otopo underline-title font-weight-bold">{{#str}} evolutionyouchoosefor, otopo {{/str}} {{label}}</h5>
+        <p>
+        {{#allowsubmissionfromdate}}
+            {{ allowsubmissionfromdate }} / {{ allowsubmissiontodate }}
+        {{/allowsubmissionfromdate}}
+        {{#lastmodificationonsession}}
+            {{#allowsubmissionfromdate}}<br>{{/allowsubmissionfromdate}}
+            {{#str}} lastmodification, otopo {{/str}} : {{lastmodificationonsession}}
+        {{/lastmodificationonsession}}
+        </p>
+        <h6 class="font-weight-bold" style="color: {{color}}">{{#str}} autoevaldegree, otopo {{/str}} {{rank}}</h6>
+        <h6 class="font-weight-bold otopo">{{degree.name}}</h6>
+        {{#degree.description}}
+            <p>
+                <b>{{#str}} description, otopo {{/str}} :</b><br>
+                {{ degree.description }}
+            </p>
+        {{/degree.description}}
+    {{/chartitemdegrees}}
+{{/chartitem}}
+
+<div class="d-flex justify-content-end">
+    <a class="btn-otopo ml-5 mr-2 no-print" href="#" onclick="window.print()">{{#str}} print, otopo {{/str}}</a>
+</div>

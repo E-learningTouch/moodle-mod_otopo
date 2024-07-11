@@ -1,0 +1,84 @@
+{{!
+    This file is part of Moodle - https://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template mod_otopo/view_page
+
+    The template HTML for the view page.
+}}
+{{#actionok}}
+    <div class="tabbable boxed parentTabs p-4">
+        <ul class="nav nav-tabs no-print">
+            {{#canadmin}}<li><a href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=edit&object=params" class="nav-link {{#edit}}active{{/edit}}">{{#str}} edit, otopo {{/str}}</a>{{/canadmin}}
+            </li>
+            {{#canconsult}}<li><a href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=report&object=individual" class="nav-link {{#report}}active{{/report}}">{{#str}} menuconsult, otopo {{/str}}</a>{{/canconsult}}
+            </li>
+            {{#canadmin}}<li><a href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=preview&object=sessions" class="nav-link {{#preview}}active{{/preview}}">{{#str}} menupreview, otopo {{/str}}</a>{{/canadmin}}
+            </li>
+        </ul>
+        <div class="tab-content">
+            {{#canadmin}}
+                <div class="tab-pane fade {{#edit}}active in{{/edit}}" id="edit">
+                    <div class="tabbable">
+                        <ul class="nav nav-tabs no-print">
+                            <li><a href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=edit&object=params" class="nav-link {{#params}}active{{/params}}">{{#str}} menuparams, otopo {{/str}}</a>
+                            </li>
+                            <li><a href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=edit&object=sessions" class="nav-link {{#sessions}}active{{/sessions}} {{#disabledsessions}}disabled{{/disabledsessions}}">{{#str}} menusessions, otopo {{/str}}</a>
+                            </li>
+                            <li><a href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=edit&object=grids" class="nav-link {{#grids}}active{{/grids}}">{{#str}} menugrids, otopo {{/str}}</a>
+                            </li>
+                            {{#canmanagetemplates}}<li><a href="{{config.wwwroot}}/mod/otopo/templates.php?cmid={{cm.id}}" class="nav-link {{#templates}}active{{/templates}}">{{#str}} menutemplates, otopo {{/str}}</a>{{/canmanagetemplates}}
+                            </li>
+                        </ul>
+                        <div class="tab-content main">
+                            {{#edit}}{{{content}}}{{/edit}}
+                        </div>
+                    </div>
+                </div>
+            {{/canadmin}}
+            {{#canconsult}}
+                <div class="tab-pane fade {{#report}}active in{{/report}}" id="report">
+                    <div class="tabbable">
+                        <ul class="nav nav-tabs no-print">
+                            <li><a href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=report&object=individual" class="nav-link {{#individual}}active{{/individual}}">{{#str}} menuindividualreport, otopo {{/str}}</a>
+                            </li>
+                            <li><a href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=report&object=group" class="nav-link {{#group}}active{{/group}}">{{#str}} menugroupreport, otopo {{/str}}</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content main">
+                            {{#report}}{{{content}}}{{/report}}
+                        </div>
+                    </div>
+                </div>
+            {{/canconsult}}
+            {{#canadmin}}
+                <div class="tab-pane fade  {{#preview}}active in{{/preview}}" id="preview">
+                    <div class="tabbable">
+                        <ul class="nav nav-tabs no-print">
+                            <li class="active"><a href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=preview&object=sessions" class="nav-link {{#sessions}}active{{/sessions}}">{{#str}} menusession, otopo {{/str}}</a>
+                            </li>
+                            <li><a href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=preview&object=grids" class="nav-link {{#grids}}active{{/grids}}">{{#str}} menugrid, otopo {{/str}}</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content main">
+                            {{#preview}}{{{content}}}{{/preview}}
+                        </div>
+                    </div>
+                </div>
+            {{/canadmin}}
+        </div>
+    </div>
+{{/actionok}}
