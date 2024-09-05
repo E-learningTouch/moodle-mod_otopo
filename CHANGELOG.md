@@ -34,6 +34,7 @@ Fixed the remaining *blocking* bugs and compliance issues in this version. Guide
 
 ### Changed
 
+- Improved the [CONTRIBUTING.md](CONTRIBUTING.md) file to make it GitHub/GitLab compatible and easier to understand.
 - Improved the [README.md](README.md) and [CHANGELOG.md](CHANGELOG.md) files to make them clearer and easier to understand.
 
 ## 1.0.10
