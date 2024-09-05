@@ -48,7 +48,7 @@ if (has_capability('mod/otopo:grade', $modulecontext)) {
     redirect('view.php?id=' . $id . '&action=report&object=individual');
 } else {
     if ($moduleinstance->session) {
-        $session = get_last_session_closed($o);
+        $session = get_last_session_closed($moduleinstance);
     } else {
         $otopos = get_users_otopos($moduleinstance, [$USER->id]);
         if (array_key_exists($USER->id, $otopos)) {

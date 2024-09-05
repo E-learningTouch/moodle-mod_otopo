@@ -327,7 +327,12 @@ if ($canadmin || $cangrade || $canexportresults) {
                     'nbrdegreesmax' => $nbrdegreesmax,
                 ]);
 
-                $mform = new template_form(null, ['o' => $moduleinstance->id, 'template' => $template, 'action' => 'edit', 'cmid' => $cm->id]);
+                $mform = new template_form(null, [
+                    'o' => $moduleinstance->id,
+                    'template' => $template,
+                    'action' => 'edit',
+                    'cmid' => $cm->id,
+                ]);
 
                 if ($mform->is_cancelled()) {
                     redirect(new moodle_url('/mod/otopo/view.php', [
@@ -386,7 +391,7 @@ if ($canadmin || $cangrade || $canexportresults) {
 
                 $users = optional_param('users', 'params', PARAM_TEXT);
                 if (!empty($users)) {
-                    $users = explode(', ', $users);
+                    $users = explode(',', $users);
                 } else {
                     $users = [];
                 }
@@ -410,7 +415,7 @@ if ($canadmin || $cangrade || $canexportresults) {
                 foreach (array_values($items) as $key1 => $item) {
                     $header[] = 'item' . ($key1 + 1);
                 }
-                fputcsv($f, $header, ', ');
+                fputcsv($f, $header, ',');
 
                 for ($i = 0; $i < $nbrdegreesmax; $i++) {
                     $row = ['degree' => 'degree' . ($i + 1)];
@@ -421,7 +426,7 @@ if ($canadmin || $cangrade || $canexportresults) {
                             $row['item' . ($key1 + 1)] = '';
                         }
                     }
-                    fputcsv($f, $row, ', ');
+                    fputcsv($f, $row, ',');
                 }
 
                 fclose($f);
@@ -432,7 +437,7 @@ if ($canadmin || $cangrade || $canexportresults) {
 
                 $sessions = optional_param('sessions', 'params', PARAM_TEXT);
                 if (!empty($sessions)) {
-                    $sessionsparam = explode(', ', $sessions);
+                    $sessionsparam = explode(',', $sessions);
                     $sessions = [];
                     foreach ($sessionsparam as $param) {
                         $arr = explode('_', $param);
@@ -452,13 +457,13 @@ if ($canadmin || $cangrade || $canexportresults) {
                 $userssessionswithotopos = get_users_sessions_with_otopos($moduleinstance);
                 $graders = get_graders($moduleinstance);
 
-                header('Content-Type: text/csv');
+                header('Content-Type: text/css; charset=utf-8');
                 header('Content-Disposition: attachment; filename="individual_exports_' . $moduleinstance->id . '.csv";');
 
                 $f = fopen('php://output', 'w');
 
                 $header = ['fullname', 'session', 'grade', 'comment'];
-                fputcsv($f, $header, ', ');
+                fputcsv($f, $header, ',');
 
                 if ($moduleinstance->session) {
                     $sessionsids = get_sessions($moduleinstance);
@@ -505,7 +510,7 @@ if ($canadmin || $cangrade || $canexportresults) {
                                     'grade' => $grade,
                                     'comment' => strip_tags($comment),
                                 ];
-                                fputcsv($f, $row, ', ');
+                                fputcsv($f, $row, ',');
                             }
                         }
                     }

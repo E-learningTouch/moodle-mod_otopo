@@ -124,7 +124,7 @@ class mod_otopo_external extends external_api {
     public static function get_items_parameters() {
         return new external_function_parameters([
             'otopo' => new external_value(PARAM_INT, 'id of the otopo activity'),
-            'cmid' => new external_value(PARAM_INT, 'cmid of the otopo activity user come from', VALUE_OPTIONAL),
+            'cmid' => new external_value(PARAM_INT, 'cmid of the otopo activity user come from', VALUE_DEFAULT, 0),
         ]);
     }
 
@@ -159,7 +159,7 @@ class mod_otopo_external extends external_api {
      * @param int $otopo Otopo Id.
      * @return object[] Items of the activity
      */
-    public static function get_items(int $otopo, int $cmid = 0) {
+    public static function get_items(int $otopo, int $cmid) {
         global $CFG, $DB;
         require_once("$CFG->dirroot/group/lib.php");
 
@@ -185,7 +185,7 @@ class mod_otopo_external extends external_api {
                 'color' => new external_value(PARAM_TEXT, 'item color'),
                 'ord' => new external_value(PARAM_INT, 'degree record ord'),
             ]),
-            'cmid' => new external_value(PARAM_INT, 'cmid of the otopo activity user come from', VALUE_OPTIONAL),
+            'cmid' => new external_value(PARAM_INT, 'cmid of the otopo activity user come from', VALUE_DEFAULT, 0),
         ]);
     }
 
@@ -242,7 +242,7 @@ class mod_otopo_external extends external_api {
                 'color' => new external_value(PARAM_TEXT, 'item color'),
                 'ord' => new external_value(PARAM_INT, 'degree record ord'),
             ]),
-            'cmid' => new external_value(PARAM_INT, 'cmid of the otopo activity user come from', VALUE_OPTIONAL),
+            'cmid' => new external_value(PARAM_INT, 'cmid of the otopo activity user come from', VALUE_DEFAULT, 0),
         ]);
     }
 
@@ -290,7 +290,7 @@ class mod_otopo_external extends external_api {
     public static function delete_item_parameters() {
         return new external_function_parameters([
             'itemid' => new external_value(PARAM_INT, 'item id'),
-            'cmid' => new external_value(PARAM_INT, 'cmid of the otopo activity user come from', VALUE_OPTIONAL),
+            'cmid' => new external_value(PARAM_INT, 'cmid of the otopo activity user come from', VALUE_DEFAULT, 0),
         ]);
     }
 
@@ -337,11 +337,11 @@ class mod_otopo_external extends external_api {
             'itemid' => new external_value(PARAM_INT, 'id of the otopo item'),
             'degree' => new external_single_structure([
                 'name' => new external_value(PARAM_TEXT, 'degree name'),
-                'description' => new external_value(PARAM_TEXT, 'degree description', VALUE_OPTIONAL),
+                'description' => new external_value(PARAM_TEXT, 'degree description', VALUE_DEFAULT, null),
                 'grade' => new external_value(PARAM_INT, 'degree grade'),
                 'ord' => new external_value(PARAM_INT, 'degree record ord'),
             ]),
-            'cmid' => new external_value(PARAM_INT, 'cmid of the otopo activity user come from', VALUE_OPTIONAL),
+            'cmid' => new external_value(PARAM_INT, 'cmid of the otopo activity user come from', VALUE_DEFAULT, 0),
         ]);
     }
 
@@ -397,11 +397,11 @@ class mod_otopo_external extends external_api {
             'degree' => new external_single_structure([
                 'id' => new external_value(PARAM_INT, 'degree id'),
                 'name' => new external_value(PARAM_TEXT, 'degree name'),
-                'description' => new external_value(PARAM_TEXT, 'degree description', VALUE_OPTIONAL),
+                'description' => new external_value(PARAM_TEXT, 'degree description', VALUE_DEFAULT, null),
                 'grade' => new external_value(PARAM_INT, 'degree grade'),
                 'ord' => new external_value(PARAM_INT, 'degree record ord'),
             ]),
-            'cmid' => new external_value(PARAM_INT, 'cmid of the otopo activity user come from', VALUE_OPTIONAL),
+            'cmid' => new external_value(PARAM_INT, 'cmid of the otopo activity user come from', VALUE_DEFAULT, 0),
         ]);
     }
 
@@ -450,7 +450,7 @@ class mod_otopo_external extends external_api {
     public static function delete_degree_parameters() {
         return new external_function_parameters([
             'degreeid' => new external_value(PARAM_INT, 'degree id'),
-            'cmid' => new external_value(PARAM_INT, 'cmid of the otopo activity user come from', VALUE_OPTIONAL),
+            'cmid' => new external_value(PARAM_INT, 'cmid of the otopo activity user come from', VALUE_DEFAULT, 0),
         ]);
     }
 
@@ -585,10 +585,10 @@ class mod_otopo_external extends external_api {
      * @param int $otopo Otopo ID.
      * @param int $session Otopo session ID.
      * @param int $item Otopo item ID.
-     * @param int|null $degree Otopo degree ID.
+     * @param int $degree Otopo degree ID.
      * @param string $justification User justification.
      */
-    public static function set_user_otopo(int $otopo, int $session, int $item, ?int $degree, string $justification) {
+    public static function set_user_otopo(int $otopo, int $session, int $item, int $degree, string $justification) {
         global $CFG, $DB, $USER;
         require_once("$CFG->dirroot/group/lib.php");
 
@@ -644,7 +644,7 @@ class mod_otopo_external extends external_api {
             'users' => new external_multiple_structure(
                 new external_value(PARAM_INT, 'id of user')
             ),
-            'session' => new external_value(PARAM_INT, 'id of the session', VALUE_OPTIONAL),
+            'session' => new external_value(PARAM_INT, 'id of the session', VALUE_DEFAULT, null),
         ]);
     }
 
@@ -690,9 +690,10 @@ class mod_otopo_external extends external_api {
      *
      * @param int $o Otopo ID.
      * @param array $users Users to show.
-     * @param int $otopo Otopo session ID.
+     * @param int|null $otopo Otopo session ID.
+     * @return array
      */
-    public static function get_group_chart(int $o, array $users, int $session) {
+    public static function get_group_chart(int $o, array $users, ?int $session) {
         global $DB;
 
         $params = self::validate_parameters(
@@ -761,7 +762,7 @@ class mod_otopo_external extends external_api {
         return new external_function_parameters([
             'otopo' => new external_value(PARAM_INT, 'id of the otopo activity'),
             'visual' => new external_value(PARAM_TEXT, 'visual for charts'),
-            'item' => new external_value(PARAM_INT, 'id of the item to focus evolution', VALUE_OPTIONAL),
+            'item' => new external_value(PARAM_INT, 'id of the item to focus evolution', VALUE_DEFAULT, null),
         ]);
     }
 
@@ -1019,7 +1020,7 @@ class mod_otopo_external extends external_api {
         return new external_function_parameters([
             'otopo' => new external_value(PARAM_INT, 'otopo instance id'),
             'userid' => new external_value(PARAM_INT, 'user id'),
-            'session' => new external_value(PARAM_INT, 'session id', VALUE_OPTIONAL),
+            'session' => new external_value(PARAM_INT, 'session id', VALUE_DEFAULT, null),
         ]);
     }
 
@@ -1029,10 +1030,10 @@ class mod_otopo_external extends external_api {
      *
      * @param int $o Otopo ID.
      * @param int $userid The user id
-     * @param int $session Otopo session ID.
+     * @param int|null $session Otopo session ID.
      * @throws moodle_exception
      */
-    public static function get_participant(int $o, int $userid, int $session) {
+    public static function get_participant(int $o, int $userid, ?int $session) {
         global $DB, $CFG;
         require_once($CFG->dirroot . "/user/lib.php");
 
@@ -1245,7 +1246,7 @@ class mod_otopo_external extends external_api {
         return new external_function_parameters([
             'otopo' => new external_value(PARAM_INT, 'otopo instance id'),
             'userid' => new external_value(PARAM_INT, 'user id'),
-            'session' => new external_value(PARAM_INT, 'session id', VALUE_OPTIONAL),
+            'session' => new external_value(PARAM_INT, 'session id', VALUE_DEFAULT, 0),
             'jsonformdata' => new external_value(PARAM_RAW, 'The data from the grading form, encoded as a json array'),
             'itemscomments' => new external_multiple_structure(
                 new external_single_structure([

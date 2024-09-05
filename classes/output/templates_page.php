@@ -40,7 +40,7 @@ class templates_page implements renderable, templatable {
     private ?object $template;
 
     /** @var string $action Action performed. */
-    private string $action = 'show';
+    private string $action;
 
     /** @var moodleform|null $form to show. */
     private ?moodleform $form;

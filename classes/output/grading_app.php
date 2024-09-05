@@ -45,45 +45,49 @@ class grading_app implements renderable, templatable {
     /**
      * @var $userid - The initial user id.
      */
-    public $userid = 0;
+    public int $userid;
 
     /**
      * @var $course - The otopo course.
      */
-    public $course = null;
+    public object $course;
 
     /**
      * @var $cm - The otopo course module.
      */
-    public $cm = null;
+    public object $cm;
 
     /**
      * @var $otopo - The otopo instance.
      */
-    public $otopo = null;
+    public object $otopo;
 
     /**
      * @var context $context - The otopo context.
      */
-    public context $context = null;
+    public context $context;
 
     /**
-     * @var int $session - The session.
+     * @var int|null $session - The session.
      */
-    public int $session = null;
+    public ?int $session;
 
     /**
      * @var array<int,object> $participants - The participants.
      */
-    public array $participants = null;
+    public array $participants;
 
     /**
      * Constructor for this renderable.
      *
-     * @param int $userid The user we will open the grading app too.
-     * @param assign $assignment The assignment class
+     * @param int $userid User id.
+     * @param object $course Course instance.
+     * @param object $cm Course module instance.
+     * @param object $otopo Otopo instance.
+     * @param context $context Context (should be CONTEXT_MODULE).
+     * @param int|null $session Session id if any.
      */
-    public function __construct($userid, $course, $cm, $otopo, $context, $session) {
+    public function __construct(int $userid, object $course, object $cm, object $otopo, context $context, ?int $session = null) {
         $this->userid = $userid;
         $this->course = $course;
         $this->cm = $cm;
@@ -103,7 +107,7 @@ class grading_app implements renderable, templatable {
      * @return object - Flat list of exported data.
      */
     public function export_for_template(renderer_base $output) {
-        global $CFG, $USER;
+        global $CFG;
 
         $export = new stdClass();
 
