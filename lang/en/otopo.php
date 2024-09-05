@@ -84,9 +84,9 @@ $string['grade'] = 'Grade';
 
 $string['sessionoptions'] = 'Session options';
 $string['session'] = 'Session';
-$string['session_help'] = 'If **Imposed session**: students must self-position to the sessions you define. If **Open session**: students can self-position as many times as they like, within the session limit defined.';
-$string['sessionlimited'] = 'Imposed session';
+$string['session_help'] = 'If **Open session**: students must self-position to the sessions you define. If **Imposed session**: students can self-position as many times as they like, within the session limit defined.';
 $string['sessionopen'] = 'Open session';
+$string['sessionlimited'] = 'Imposed session';
 $string['sessions'] = 'Number of sessions';
 $string['limitsessions'] = 'Maximum number of sessions';
 
@@ -99,7 +99,7 @@ $string['cohortvisual'] = 'Cohort visuals';
 $string['otopoconditioncompletion'] = 'Otopo completion rules';
 
 $string['completionsubmit'] = 'Display the activity as completed as soon as the Otopo completion rules are met.';
-$string['completionsubmit_help'] = 'If **Imposed session**: the activity is considered completed if at least one self-positioning has been validated by the student. If **Open session** : the activity is considered completed if the last session has been filled.';
+$string['completionsubmit_help'] = 'If **Open session**: the activity is considered completed if at least one self-positioning has been validated by the student. If **Imposed session** : the activity is considered completed if the last session has been filled.';
 
 /**************************
  * Mod form and settings. *

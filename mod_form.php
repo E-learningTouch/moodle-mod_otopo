@@ -71,8 +71,8 @@ class mod_otopo_mod_form extends moodleform_mod {
         $mform->addElement('header', 'session_options', get_string('sessionoptions', 'otopo'));
 
         $mform->addElement('select', 'session', get_string('session', 'otopo'), [
-            get_string('sessionlimited', 'otopo'),
             get_string('sessionopen', 'otopo'),
+            get_string('sessionlimited', 'otopo'),
         ]);
         $mform->addHelpButton('session', 'session', 'otopo');
         $mform->setDefault('session', 1);

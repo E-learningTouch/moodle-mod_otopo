@@ -84,9 +84,9 @@ $string['grade'] = 'Note';
 
 $string['sessionoptions'] = 'Options de sessions';
 $string['session'] = 'Session';
-$string['session_help'] = 'Si **Session imposée** : les étudiants devront s\'auto-positionner sur les sessions que vous aurez définies. Si **Session libre** : les étudiants pourront s\'auto-positionner autant de fois qu\'ils le souhaitent, dans la limite de sessions définie.';
-$string['sessionlimited'] = 'Session imposée';
+$string['session_help'] = 'Si **Session libre** : les étudiants devront s\'auto-positionner sur les sessions que vous aurez définies. Si **Session imposée** : les étudiants pourront s\'auto-positionner autant de fois qu\'ils le souhaitent, dans la limite de sessions définie.';
 $string['sessionopen'] = 'Session libre';
+$string['sessionlimited'] = 'Session imposée';
 $string['sessions'] = 'Nombre de sessions';
 $string['limitsessions'] = 'Nombre limite de sessions';
 
@@ -99,7 +99,7 @@ $string['cohortvisual'] = 'Visuel des cohortes';
 $string['otopoconditioncompletion'] = 'Condition Otopo';
 
 $string['completionsubmit'] = 'Afficher l\'activité comme terminée dès que les conditions OTOPO sont remplies.';
-$string['completionsubmit_help'] = 'Si **Session imposée** : l\'activité est considérée comme achevée si au moins un auto-positionnement a été validé par l\'étudiant. Si **Session libre** : l\'activité est considérée comme achevée si la dernière session a été remplie.';
+$string['completionsubmit_help'] = 'Si **Session libre** : l\'activité est considérée comme achevée si au moins un auto-positionnement a été validé par l\'étudiant. Si **Session imposée** : l\'activité est considérée comme achevée si la dernière session a été remplie.';
 
 /**************************
  * Mod form and settings. *

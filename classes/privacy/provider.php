@@ -170,7 +170,7 @@ class provider implements core_userlist_provider, metadata_provider, plugin_prov
         // Export the grades and related comments.
         [$insql, $inparams] = $DB->get_in_or_equal($cmids, SQL_PARAMS_NAMED, 'cmid');
         $records = $DB->get_recordset_sql("
-            SELECT cm.instance, o.name AS modulename, os.name AS sessionname, ouo.justification, og.grade, ouo.teacher_comment
+            SELECT DISTINCT cm.id, o.name AS modulename, os.name AS sessionname, ouo.justification, og.grade, ouo.teacher_comment
             FROM {course_modules} cm
             JOIN {modules} m ON cm.module = m.id
             JOIN {otopo} o ON o.id = cm.instance
@@ -183,9 +183,9 @@ class provider implements core_userlist_provider, metadata_provider, plugin_prov
 
         $data = [];
         foreach ($records as $record) {
-            $data[$record->instance][] = [
-                'module_name' => $record->modulename,
-                'sessionname' => $record->sessionname,
+            $data[$record->id][] = [
+                'activity_name' => $record->modulename,
+                'session_name' => $record->sessionname,
                 'justification' => $record->justification,
                 'grade' => $record->grade,
                 'teacher_comment' => $record->teacher_comment,
@@ -198,7 +198,7 @@ class provider implements core_userlist_provider, metadata_provider, plugin_prov
             $exportdata = array_merge($contextdata, [ 'sessions' => $exportdata ]);
 
             helper::export_context_files($context, $user);
-            writer::with_context($context)->export_data([], $exportdata);
+            writer::with_context($context)->export_data([], (object) $exportdata);
         }
     }
 
