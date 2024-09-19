@@ -41,8 +41,6 @@ class importgrid_form extends moodleform {
      * Add elements to form.
      */
     public function definition() {
-        global $CFG, $DB, $PAGE, $OUTPUT;
-
         $mform = $this->_form;
 
         $mform->addElement('hidden', 'o', $this->_customdata['o']);
@@ -51,6 +49,8 @@ class importgrid_form extends moodleform {
         $mform->setType('action', PARAM_TEXT);
         $mform->addElement('hidden', 'object', 'grids');
         $mform->setType('object', PARAM_TEXT);
+        $mform->addElement('hidden', 'sesskey', $this->_customdata['sesskey']);
+        $mform->setType('sesskey', PARAM_TEXT);
 
         $mform->addElement(
             'filepicker',

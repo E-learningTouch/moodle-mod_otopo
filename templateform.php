@@ -59,6 +59,9 @@ class template_form extends moodleform {
         $mform->addElement('hidden', 'cmid', $this->_customdata['cmid']);
         $mform->setType('cmid', PARAM_INT);
 
+        $mform->addElement('hidden', 'sesskey', $this->_customdata['sesskey']);
+        $mform->setType('sesskey', PARAM_TEXT);
+
         $mform->addElement('text', 'name', get_string('templatename', 'otopo'), ['size' => '64']);
         $mform->setType('name', PARAM_TEXT);
         $mform->addRule('name', null, 'required', null, 'client');

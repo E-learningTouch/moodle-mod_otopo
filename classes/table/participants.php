@@ -144,6 +144,7 @@ class participants extends participants_table implements dynamic_table {
             'id' => $this->cmid,
             'action' => 'report',
             'object' => 'individual',
+            'sesskey' => sesskey(),
         ]);
     }
 
@@ -188,6 +189,7 @@ class participants extends participants_table implements dynamic_table {
                         'action' => 'grader',
                         'user' => $data->id,
                         'session' => $sessionid,
+                        'sesskey' => sesskey(),
                     ]),
                     $label,
                     $usersession['validated'] ? null : [ 'class' => 'text-dark' ]

@@ -195,6 +195,8 @@ class view_fill_page implements renderable, templatable {
             $data->star = $output->image_url('star', 'mod_otopo')->out();
         }
 
+        $data->sesskey = sesskey();
+
         return $data;
     }
 }

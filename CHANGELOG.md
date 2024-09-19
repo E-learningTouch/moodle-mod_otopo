@@ -14,9 +14,22 @@ Additionally, make sure to acknowledge all contributors by adding their names to
 
 ## Table of Contents
 
+- [1.0.12](#1.0.12)
 - [1.0.11](#1.0.11)
 - [1.0.10](#1.0.10)
 - [1.0.9](#1.0.9)
+
+## 1.0.12
+
+### Fixed
+
+- Missing CSS root class `path-mod-otopo` in `styles.css` to avoid conflicts.
+- Missing sesskey check when performing important actions. For web services, Moodle takes care of this beforehand (declared services automatically require the user to be logged in), then capabilities are checked with the `validate_otopo` function.
+- Version in `db/install.xml`.
+
+### Removed
+
+- Unused `grade.php` file.
 
 ## 1.0.11
 

@@ -22,9 +22,9 @@
 {{#actionok}}
     <div class="tabbable boxed parentTabs p-4">
         <ul class="nav nav-tabs no-print">
-            {{#canadmin}}<li><a href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=edit&object=params" class="nav-link {{#edit}}active{{/edit}}">{{#str}} edit, otopo {{/str}}</a>{{/canadmin}}
+            {{#canadmin}}<li><a href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=edit&object=params&sesskey={{sesskey}}" class="nav-link {{#edit}}active{{/edit}}">{{#str}} edit, otopo {{/str}}</a>{{/canadmin}}
             </li>
-            {{#canconsult}}<li><a href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=report&object=individual" class="nav-link {{#report}}active{{/report}}">{{#str}} menuconsult, otopo {{/str}}</a>{{/canconsult}}
+            {{#canconsult}}<li><a href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=report&object=individual&sesskey={{sesskey}}" class="nav-link {{#report}}active{{/report}}">{{#str}} menuconsult, otopo {{/str}}</a>{{/canconsult}}
             </li>
             {{#canadmin}}<li><a href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=preview&object=sessions" class="nav-link {{#preview}}active{{/preview}}">{{#str}} menupreview, otopo {{/str}}</a>{{/canadmin}}
             </li>
@@ -34,11 +34,11 @@
                 <div class="tab-pane fade {{#edit}}active in{{/edit}}" id="edit">
                     <div class="tabbable">
                         <ul class="nav nav-tabs no-print">
-                            <li><a href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=edit&object=params" class="nav-link {{#params}}active{{/params}}">{{#str}} menuparams, otopo {{/str}}</a>
+                            <li><a href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=edit&object=params&sesskey={{sesskey}}" class="nav-link {{#params}}active{{/params}}">{{#str}} menuparams, otopo {{/str}}</a>
                             </li>
-                            <li><a href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=edit&object=sessions" class="nav-link {{#sessions}}active{{/sessions}} {{#disabledsessions}}disabled{{/disabledsessions}}">{{#str}} menusessions, otopo {{/str}}</a>
+                            <li><a href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=edit&object=sessions&sesskey={{sesskey}}" class="nav-link {{#sessions}}active{{/sessions}} {{#disabledsessions}}disabled{{/disabledsessions}}">{{#str}} menusessions, otopo {{/str}}</a>
                             </li>
-                            <li><a href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=edit&object=grids" class="nav-link {{#grids}}active{{/grids}}">{{#str}} menugrids, otopo {{/str}}</a>
+                            <li><a href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=edit&object=grids&sesskey={{sesskey}}" class="nav-link {{#grids}}active{{/grids}}">{{#str}} menugrids, otopo {{/str}}</a>
                             </li>
                             {{#canmanagetemplates}}<li><a href="{{config.wwwroot}}/mod/otopo/templates.php?cmid={{cm.id}}" class="nav-link {{#templates}}active{{/templates}}">{{#str}} menutemplates, otopo {{/str}}</a>{{/canmanagetemplates}}
                             </li>
@@ -53,9 +53,9 @@
                 <div class="tab-pane fade {{#report}}active in{{/report}}" id="report">
                     <div class="tabbable">
                         <ul class="nav nav-tabs no-print">
-                            <li><a href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=report&object=individual" class="nav-link {{#individual}}active{{/individual}}">{{#str}} menuindividualreport, otopo {{/str}}</a>
+                            <li><a href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=report&object=individual&sesskey={{sesskey}}" class="nav-link {{#individual}}active{{/individual}}">{{#str}} menuindividualreport, otopo {{/str}}</a>
                             </li>
-                            <li><a href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=report&object=group" class="nav-link {{#group}}active{{/group}}">{{#str}} menugroupreport, otopo {{/str}}</a>
+                            <li><a href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=report&object=group&sesskey={{sesskey}}" class="nav-link {{#group}}active{{/group}}">{{#str}} menugroupreport, otopo {{/str}}</a>
                             </li>
                         </ul>
                         <div class="tab-content main">

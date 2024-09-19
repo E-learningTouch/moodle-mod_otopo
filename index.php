@@ -27,29 +27,37 @@
 require_once(__DIR__ . '/../../config.php');
 require_once(__DIR__ . '/lib.php');
 
+/***********
+ * Params. *
+ ***********/
 $id = required_param('id', PARAM_INT);
 
+/***************************
+ * Course data from param. *
+ ***************************/
 $course = $DB->get_record('course', [ 'id' => $id ], '*', MUST_EXIST);
+
+/******************
+ * Access checks. *
+ ******************/
 require_course_login($course);
 
-$coursecontext = context_course::instance($course->id);
+/***************
+ * Page setup. *
+ ***************/
+$PAGE->set_url('/mod/otopo/index.php', [ 'id' => $id ]);
+$PAGE->set_title(format_string($course->fullname));
+$PAGE->set_heading(format_string($course->fullname));
+$PAGE->set_context(context_course::instance($course->id));
 
 $event = \mod_otopo\event\course_module_instance_list_viewed::create_from_course($course);
 $event->add_record_snapshot('course', $course);
 $event->trigger();
 
-$PAGE->set_url('/mod/otopo/index.php', [ 'id' => $id ]);
-$PAGE->set_title(format_string($course->fullname));
-$PAGE->set_heading(format_string($course->fullname));
-$PAGE->set_context($coursecontext);
-
-echo $OUTPUT->header();
-
-$modulenameplural = get_string('modulenameplural', 'mod_otopo');
-echo $OUTPUT->heading($modulenameplural);
-
+/**********************
+ * Prepare the table. *
+ **********************/
 $otopos = get_all_instances_in_course('otopo', $course);
-
 if (empty($otopos)) {
     notice(get_string('no$otopoinstances', 'mod_otopo'), new moodle_url('/course/view.php', [ 'id' => $course->id ]));
 }
@@ -89,5 +97,10 @@ foreach ($otopos as $otopo) {
     }
 }
 
+/***********
+ * Output. *
+ ***********/
+echo $OUTPUT->header();
+echo $OUTPUT->heading(get_string('modulenameplural', 'mod_otopo'));
 echo html_writer::table($table);
 echo $OUTPUT->footer();

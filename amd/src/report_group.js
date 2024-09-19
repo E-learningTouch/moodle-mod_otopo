@@ -34,7 +34,8 @@ define(['core/chartjs', 'core_table/dynamic', 'core/ajax', 'core/log'], function
                 e.preventDefault();
                 const users = document.querySelector('#chart').dataset.users;
                 const cmid = document.getElementById('export-csv').dataset.cmid;
-                location.href = wwwroot + "/mod/otopo/view.php?id=" + cmid + "&action=export&object=group&users=" + users;
+                location.href = wwwroot + "/mod/otopo/view.php?id=" + cmid + "&action=export&object=group&users=" + users
+                    + '&sesskey=' + M.cfg.sesskey;
             }
 
             /**

@@ -120,7 +120,7 @@
                         {{#currentsessionavailable}}
                             {{#isopen}}
                         <div class="d-flex justify-content-center">
-                            <a class="btn-otopo" href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=evaluate">{{#str}} fill, otopo {{/str}}</a>
+                            <a class="btn-otopo" href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=evaluate&sesskey={{sesskey}}">{{#str}} fill, otopo {{/str}}</a>
                         </div>
                             {{/isopen}}
                         {{/currentsessionavailable}}
@@ -147,7 +147,7 @@
                     <div class="row text-nowrap">
                         {{#sessions}}
                             <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-                                <h5 class="text-center otopo font-weight-bold"><a class="otopo" href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=evaluate&session={{id}}">{{displayname}}{{^last}} >{{/last}}</a></h5>
+                                <h5 class="text-center otopo font-weight-bold"><a class="otopo" href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=evaluate&session={{id}}&sesskey={{sesskey}}">{{displayname}}{{^last}} >{{/last}}</a></h5>
                             </div>
                         {{/sessions}}
                     </div>
@@ -292,7 +292,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">{{#str}}cancel{{/str}}</button>
-                            <a class="btn btn-primary" href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=validate&session={{sessionid}}">{{#str}} validate, otopo {{/str}}</a>
+                            <a class="btn btn-primary" href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=validate&session={{sessionid}}&sesskey={{sesskey}}">{{#str}} validate, otopo {{/str}}</a>
                         </div>
                     </div>
                 </div>

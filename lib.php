@@ -530,7 +530,12 @@ function mod_otopo_core_calendar_provide_event_action(calendar_event $event, \co
     if ($event->eventtype == OTOPO_EVENT_TYPE_SESSION) {
         return $factory->create_instance(
             get_string('fill', 'otopo'),
-            new \moodle_url('/mod/otopo/view.php', [ 'id' => $cm->id, 'action' => 'evaluate', 'session' => $event->repeatid ]),
+            new \moodle_url('/mod/otopo/view.php', [
+                'id' => $cm->id,
+                'action' => 'evaluate',
+                'session' => $event->repeatid,
+                'sesskey' => sesskey(),
+            ]),
             1,
             !session_is_valid_or_closed($event->instance, $USER, $event->repeatid)
         );

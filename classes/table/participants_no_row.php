@@ -85,6 +85,7 @@ class participants_no_row extends participants_table implements dynamic_table {
             'id' => $this->cmid,
             'action' => 'report',
             'object' => 'group',
+            'sesskey' => sesskey(),
         ]);
     }
 

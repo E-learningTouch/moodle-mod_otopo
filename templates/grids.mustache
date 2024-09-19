@@ -21,8 +21,8 @@
 }}
 <div class="d-flex justify-content-around">
     <a class="btn btn-primary" data-toggle="collapse" href="#collapseGrid" role="button" aria-expanded="false" aria-controls="collapseGrid">{{#str}} gridcreateitem, otopo {{/str}}</a>
-    <a class="btn btn-primary {{#hasotopo}}disabled{{/hasotopo}}" {{#hasotopo}}href="#"{{/hasotopo}}{{^hasotopo}}href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=import&object=templates"{{/hasotopo}}>{{#str}} gridcreatefromtemplate, otopo {{/str}}</a>
-    <a class="btn btn-primary {{#hasotopo}}disabled{{/hasotopo}}" {{#hasotopo}}href="#"{{/hasotopo}}{{^hasotopo}}href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=import&object=grids"{{/hasotopo}}>{{#str}} gridimportcsv, otopo {{/str}}</a>
+    <a class="btn btn-primary {{#hasotopo}}disabled{{/hasotopo}}" {{#hasotopo}}href="#"{{/hasotopo}}{{^hasotopo}}href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=import&object=templates&sesskey={{sesskey}}"{{/hasotopo}}>{{#str}} gridcreatefromtemplate, otopo {{/str}}</a>
+    <a class="btn btn-primary {{#hasotopo}}disabled{{/hasotopo}}" {{#hasotopo}}href="#"{{/hasotopo}}{{^hasotopo}}href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=import&object=grids&sesskey={{sesskey}}"{{/hasotopo}}>{{#str}} gridimportcsv, otopo {{/str}}</a>
 </div>
 
 <div class="collapse mt-3" id="collapseGrid">
@@ -31,8 +31,8 @@
         </div>
         <div class="d-flex flex-row justify-content-end">
             <a class="btn btn-primary ml-1 mr-1" href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=preview&object=grids">{{#str}} saveitems, otopo {{/str}}</a>
-            {{#canmanagetemplates}}<a class="btn btn-primary ml-1 mr-1" href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=edit&object=templates">{{#str}} saveastemplate, otopo {{/str}}</a>{{/canmanagetemplates}}
-            {{#canexportresults}}<a class="btn btn-primary ml-1 mr-1" href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=export&object=grids">{{#str}} exportascsv, otopo {{/str}}</a>{{/canexportresults}}
+            {{#canmanagetemplates}}<a class="btn btn-primary ml-1 mr-1" href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=edit&object=templates&sesskey={{sesskey}}">{{#str}} saveastemplate, otopo {{/str}}</a>{{/canmanagetemplates}}
+            {{#canexportresults}}<a class="btn btn-primary ml-1 mr-1" href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=export&object=grids&sesskey={{sesskey}}">{{#str}} exportascsv, otopo {{/str}}</a>{{/canexportresults}}
         </div>
     </div>
 </div>

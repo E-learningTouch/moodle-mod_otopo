@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="mod/otopo/db" VERSION="2023021600" COMMENT="XMLDB file for Moodle mod/otopo"
+<XMLDB PATH="mod/otopo/db" VERSION="2024091900" COMMENT="XMLDB file for Moodle mod/otopo"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >

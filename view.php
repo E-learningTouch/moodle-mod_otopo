@@ -24,6 +24,17 @@
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+/**
+ * This page should be completely reworked.
+ * ;-(
+ *
+ * E.g:
+ * - Instead of using `_customdata` and hidden elements in mforms, it would be better to use the actual url of the page or a
+ *   moodle_url.
+ * - Instead of merging everything into a single page, it would be better to have separate pages for each concept
+ *   (manage_session, manage_template, manage_grid, etc.), one for each form so to speak.
+ */
+
 require_once(__DIR__ . '/../../config.php');
 require_once(__DIR__ . '/lib.php');
 require_once(__DIR__ . '/sessionsform.php');
@@ -36,9 +47,8 @@ require_once(__DIR__ . '/locallib.php');
 global $CFG;
 
 require_once($CFG->dirroot . '/course/modlib.php');
-require_once($CFG->libdir . "/xsendfilelib.php");
 require_once($CFG->dirroot . '/calendar/lib.php');
-
+require_once($CFG->libdir . '/xsendfilelib.php');
 
 use core_table\local\filter\filter;
 use core_table\local\filter\integer_filter;
@@ -47,32 +57,35 @@ use mod_otopo\output\grading_app;
 define('DEFAULT_PAGE_SIZE', 20);
 define('SHOW_ALL_PAGE_SIZE', 5000);
 
-// Activity instance id.
-$o = optional_param('o', 0, PARAM_INT);
+/***********
+ * Params. *
+ ***********/
+$o = optional_param('o', 0, PARAM_INT); // Activity instance id.
+$action = optional_param('action', '', PARAM_TEXT);
+$object = optional_param('object', 'params', PARAM_TEXT);
+$sectionreturn = optional_param('sr', null, PARAM_INT);
+$perpage = optional_param('perpage', DEFAULT_PAGE_SIZE, PARAM_INT); // How many per page.
+$sesskey = optional_param('sesskey', null, PARAM_TEXT);
 
-if ($o == 0) {
-    // Course module id.
-    $id = optional_param('id', 0, PARAM_INT);
-} else {
+/******************
+ * Access checks. *
+ ******************/
+if ($o) {
     $id = 0;
-}
-
-if ($id) {
-    $cm = get_coursemodule_from_id('otopo', $id, 0, false, MUST_EXIST);
-    $course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
-    $moduleinstance = $DB->get_record('otopo', ['id' => $cm->instance], '*', MUST_EXIST);
-} else {
     $moduleinstance = $DB->get_record('otopo', ['id' => $o], '*', MUST_EXIST);
     $course = $DB->get_record('course', ['id' => $moduleinstance->course], '*', MUST_EXIST);
     $cm = get_coursemodule_from_instance('otopo', $moduleinstance->id, $course->id, false, MUST_EXIST);
+} else if ($id = optional_param('id', 0, PARAM_INT)) {
+    [ $course, $cm ] = get_course_and_cm_from_cmid($id);
+    $moduleinstance = $DB->get_record('otopo', ['id' => $cm->instance], '*', MUST_EXIST);
+} else {
+    // Oh oh something seems wrong.
+    throw new \coding_exception("Missing 'o' or 'id' parameter.");
 }
-$perpage = optional_param('perpage', DEFAULT_PAGE_SIZE, PARAM_INT); // How many per page.
 
-require_login($course, true, $cm);
+require_login($course, false, $cm);
 
 $modulecontext = context_module::instance($cm->id);
-$coursecontext = context_course::instance($course->id);
-
 require_capability('mod/otopo:view', $modulecontext);
 
 $canadmin = has_capability('mod/otopo:admin', $modulecontext);
@@ -80,34 +93,59 @@ $cangrade = has_capability('mod/otopo:grade', $modulecontext);
 $canexportresults = has_capability('mod/otopo:exportresults', $modulecontext);
 $canmanagetemplates = has_capability('mod/otopo:managetemplates', $modulecontext);
 
-// Action.
-$action = optional_param('action', '', PARAM_TEXT);
-
-// Object.
-$object = optional_param('object', 'params', PARAM_TEXT);
-
-$sectionreturn = optional_param('sr', null, PARAM_INT);
-
-$PAGE->set_url('/mod/otopo/view.php', ['id' => $cm->id, 'action' => $action, 'object' => $object]);
+/***************
+ * Page setup. *
+ ***************/
+$url = new moodle_url('/mod/otopo/view.php', [
+    'o' => $moduleinstance->id,
+    'id' => $cm->id,
+    'action' => $action,
+    'object' => $object,
+    '$sectionreturn' => $sectionreturn,
+    'perpage' => $perpage,
+    'sesskey' => $sesskey,
+]);
+$PAGE->set_url($url);
 $PAGE->set_title(format_string($moduleinstance->name));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($modulecontext);
 
-$output = $PAGE->get_renderer('mod_otopo');
-
-$body = "";
-
 $event = \mod_otopo\event\activity_viewed::create(['context' => $modulecontext]);
 $event->trigger();
 
+/*******************
+ * Prepare output. *
+ *******************/
+$output = $PAGE->get_renderer('mod_otopo');
+$body = "";
+
 if ($canadmin || $cangrade || $canexportresults) {
     $content = null;
-
-    if ($action == '') {
+    if (!$action) {
         $action = 'edit';
+
+        // This is a special case where the user has some capabilities and can therefore edit the activity settings, but accesses
+        // the activity “normally” (that's why $action can be null/empty).
+        //
+        // This is one of the reasons why this page should be reworked, as some capabilities and actions should only be checks in
+        // edit mode or something like that.
+        //
+        // We could have automatically redirected the user with a valid sesskey (but it's ugly and bad, and ugly!) or modified the
+        // url using the `cm_info_dynamic` callback to add the sesskey, but it turns out that the url is escaped by mustache and so
+        // hello escaped HTML entities ;-(. And yes, it could have worked, since `$cm->url` returns an instance of moodle_url.
+        // ---
+        // Anyway, it's better than nothing... For the time being.
+        $sesskey = sesskey();
     }
 
-    if ($action == 'grader') {
+    if ($action !== 'preview' && $action !== 'evolution' && $action !== 'progress') {
+        // The 'preview', 'evolution' and 'progress' actions do not require this check.
+        // To understand why this check is here, you need to dig into the code ;-).
+        // It's not the clearest way to do it, but this whole page would have to be redesigned to make it clearer.
+        confirm_sesskey($sesskey);
+    }
+
+    if ($action === 'grader') {
         require_capability('mod/otopo:grade', $modulecontext);
 
         $PAGE->set_pagelayout('embedded');
@@ -116,18 +154,12 @@ if ($canadmin || $cangrade || $canexportresults) {
         $userid = optional_param('user', 0, PARAM_INT);
         $session = optional_param('session', null, PARAM_INT);
 
-        $framegrader = new grading_app($userid, $course, $cm, $moduleinstance, $modulecontext, $session);
-
-        echo $output->header();
-        echo $output->render($framegrader);
-        echo $output->footer();
-
-        return;
-    }
-
-    if ($canadmin) {
-        if ($action == 'edit') {
+        $body = $output->render(new grading_app($userid, $course, $cm, $moduleinstance, $modulecontext, $session));
+    } else if ($canadmin) {
+        if ($action === 'edit') {
             if ($object == "sessions") {
+                // The $sesskey param should be set, no need to gen a new one when redirecting.
+
                 include('vue.php');
 
                 $sessiondelete = optional_param('session-delete', -1, PARAM_INT);
@@ -135,15 +167,9 @@ if ($canadmin || $cangrade || $canexportresults) {
                 $PAGE->requires->js_call_amd('mod_otopo/sessions', 'initDeleteSession', ['wwwroot' => $CFG->wwwroot]);
                 $PAGE->requires->js_call_amd('mod_otopo/sessions', 'initColorPicker');
 
-                $sessions = $DB->get_records(
-                    'otopo_session',
-                    ['otopo' => $moduleinstance->id],
-                    'allowsubmissionfromdate',
-                    '*'
-                );
+                $sessions = $DB->get_records('otopo_session', ['otopo' => $moduleinstance->id], 'allowsubmissionfromdate', '*');
 
                 $toform = toform_from_sessions($sessions);
-
                 if ($sessiondelete >= 0) {
                     if ($toform && array_key_exists($sessiondelete, $toform->id)) {
                         $session = $DB->get_record('otopo_session', ['id' => $toform->id[$sessiondelete]]);
@@ -188,17 +214,22 @@ if ($canadmin || $cangrade || $canexportresults) {
 
                 $mform = new sessions_form(null, [
                     'o' => $moduleinstance->id,
-                    'sessions' => $moduleinstance->sessions,
-                    'count_sessions' => count($sessions),
+                    'sessions' => $moduleinstance->sessions, // Not used in form?
+                    'count_sessions' => count($sessions), // Not used in form?
+                    'sesskey' => $sesskey,
                 ]);
 
                 if ($mform->is_cancelled()) {
                     // Handle form cancel operation, if cancel button is present on form.
                     redirect(new moodle_url('/mod/otopo/view.php', [
                         'o' => $moduleinstance->id,
-                        'action' => $action,
-                        'object' => $object]));
-                } else if ($fromform = $mform->get_data()) {
+                        'action' => 'edit',
+                        'object' => 'sessions',
+                        'sesskey' => $sesskey,
+                    ]));
+                }
+
+                if ($fromform = $mform->get_data()) {
                     // In this case you process validated data. $mform->get_data() returns data posted in form.
 
                     for ($i = 0; $i < $fromform->option_repeats; $i++) {
@@ -290,8 +321,9 @@ if ($canadmin || $cangrade || $canexportresults) {
 
                     redirect(new moodle_url('/mod/otopo/view.php', [
                         'o' => $moduleinstance->id,
-                        'action' => $action,
-                        'object' => $object,
+                        'action' => 'edit',
+                        'object' => 'sessions',
+                        'sesskey' => $sesskey,
                     ]));
                 } else {
                     // This branch is executed if the form is submitted but the data doesn't validate
@@ -332,6 +364,7 @@ if ($canadmin || $cangrade || $canexportresults) {
                     'template' => $template,
                     'action' => 'edit',
                     'cmid' => $cm->id,
+                    'sesskey' => $sesskey,
                 ]);
 
                 if ($mform->is_cancelled()) {
@@ -521,14 +554,20 @@ if ($canadmin || $cangrade || $canexportresults) {
                 return;
             }
         } else if ($action == 'import') {
+            // The $sesskey param should be set, no need to gen a new one when redirecting.
+
             if (!has_otopo($moduleinstance->id)) {
                 if ($object == 'grids') {
-                    $mform = new importgrid_form(null, ['o' => $moduleinstance->id]);
+                    $mform = new importgrid_form(null, [
+                        'o' => $moduleinstance->id,
+                        'sesskey' => $sesskey,
+                    ]);
                     if ($mform->is_cancelled()) {
                         redirect(new moodle_url('/mod/otopo/view.php', [
                             'id' => $cm->id,
                             'action' => 'edit',
                             'object' => 'grids',
+                            'sesskey' => $sesskey,
                         ]));
                     } else if ($fromform = $mform->get_data()) {
                         $content = $mform->get_file_content('csv');
@@ -585,6 +624,7 @@ if ($canadmin || $cangrade || $canexportresults) {
                                 'id' => $cm->id,
                                 'action' => 'edit',
                                 'object' => 'grids',
+                                'sesskey' => $sesskey,
                             ]));
                         }
                     }
@@ -592,12 +632,18 @@ if ($canadmin || $cangrade || $canexportresults) {
                 } else if ($object == 'templates') {
                     $templates = get_templates();
 
-                    $mform = new fromtemplate_form(null, ['templates' => $templates, 'id' => $cm->id, 'action' => 'edit']);
+                    $mform = new fromtemplate_form(null, [
+                        'templates' => $templates,
+                        'id' => $cm->id,
+                        'action' => 'edit',
+                        'sesskey' => $sesskey,
+                    ]);
                     if ($mform->is_cancelled()) {
                         redirect(new moodle_url('/mod/otopo/view.php', [
                             'id' => $cm->id,
                             'action' => 'edit',
                             'object' => 'grids',
+                            'sesskey' => $sesskey,
                         ]));
                     } else if ($fromform = $mform->get_data()) {
                         $templateid = intval($fromform->template);
@@ -611,6 +657,7 @@ if ($canadmin || $cangrade || $canexportresults) {
                             'id' => $cm->id,
                             'action' => 'edit',
                             'object' => 'grids',
+                            'sesskey' => $sesskey,
                         ]));
                     }
 
@@ -634,7 +681,10 @@ if ($canadmin || $cangrade || $canexportresults) {
 
             // Render the user filters.
             $content .= '<div class="no-print">';
-            $renderable = new \core_user\output\participants_filter($coursecontext, $participanttable->uniqueid);
+            $renderable = new \core_user\output\participants_filter(
+                context_course::instance($course->id),
+                $participanttable->uniqueid
+            );
             $templatecontext = $renderable->export_for_template($OUTPUT);
             $templatecontext->otopo = $moduleinstance;
             if ($object == 'group') {
@@ -756,22 +806,20 @@ if ($canadmin || $cangrade || $canexportresults) {
         if (!$content) {
             $content = $OUTPUT->render_from_template('mod_otopo/params', ['cm' => $cm]);
         }
+
+        $body .= $output->render(new mod_otopo\output\view_page(
+            $cm,
+            $moduleinstance,
+            $action,
+            $object,
+            $content,
+            $canadmin,
+            $cangrade,
+            $canexportresults,
+            $canmanagetemplates,
+            has_otopo($moduleinstance->id)
+        ));
     }
-
-    $renderable = new mod_otopo\output\view_page(
-        $cm,
-        $moduleinstance,
-        $action,
-        $object,
-        $content,
-        $canadmin,
-        $cangrade,
-        $canexportresults,
-        $canmanagetemplates,
-        has_otopo($moduleinstance->id)
-    );
-
-    $body .= $output->render($renderable);
 }
 
 if (has_capability('mod/otopo:fill', $modulecontext)) {
@@ -784,6 +832,11 @@ if (has_capability('mod/otopo:fill', $modulecontext)) {
 
     if (($action == 'edit' && $object == 'params') || $action == '') {
         $action = 'progress';
+    } else if ($action !== 'preview' && $action !== 'evolution' && $action !== 'progress') {
+        // The 'preview', 'evolution' and 'progress' actions do not require this check.
+        // To understand why this check is here, you need to dig into the code ;-).
+        // It's not the clearest way to do it, but this whole page would have to be redesigned to make it clearer.
+        confirm_sesskey($sesskey);
     }
 
     if ($action == 'evaluate') {
@@ -859,7 +912,7 @@ if (has_capability('mod/otopo:fill', $modulecontext)) {
         ]);
     }
 
-    $renderable = new mod_otopo\output\view_fill_page(
+    $body .= $output->render(new mod_otopo\output\view_fill_page(
         $cm,
         $moduleinstance,
         $action,
@@ -868,13 +921,12 @@ if (has_capability('mod/otopo:fill', $modulecontext)) {
         $sessionvalid,
         $sessionvalidorclosed,
         $sessiono
-    );
-
-    $body .= $output->render($renderable);
+    ));
 }
 
+/***********
+ * Output. *
+ ***********/
 echo $OUTPUT->header();
-
 echo $body;
-
 echo $OUTPUT->footer();

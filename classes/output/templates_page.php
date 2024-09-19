@@ -79,6 +79,7 @@ class templates_page implements renderable, templatable {
         $data->templates = null;
         $data->items = null;
         $data->cmid = $this->cmid;
+        $data->sesskey = sesskey();
         if (!$this->template) {
             $data->templates = array_values(get_templates());
         } else {

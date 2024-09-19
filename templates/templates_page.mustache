@@ -40,9 +40,9 @@
     <h2 class="text-center mb-3">{{ template.name }}</h2>
     {{> mod_otopo/grids_table }}
     <div class="d-flex flex-row justify-content-end">
-        <a class="btn btn-default ml-1 mr-1" href="{{config.wwwroot}}/mod/otopo/templates.php?id={{template.id}}&action=export{{#cmid}}&cmid={{cmid}}{{/cmid}}">{{#str}} exportascsv, otopo {{/str}}</a>
-        <a class="btn btn-danger ml-1 mr-1" href="{{config.wwwroot}}/mod/otopo/templates.php?id={{template.id}}&action=delete{{#cmid}}&cmid={{cmid}}{{/cmid}}">{{#str}} delete {{/str}}</a>
-        <a class="btn btn-primary ml-1 mr-1" href="{{config.wwwroot}}/mod/otopo/templates.php?id={{template.id}}&action=edit{{#cmid}}&cmid={{cmid}}{{/cmid}}">{{#str}} edit {{/str}}</a>
+        <a class="btn btn-default ml-1 mr-1" href="{{config.wwwroot}}/mod/otopo/templates.php?id={{template.id}}&action=export{{#cmid}}&cmid={{cmid}}{{/cmid}}&sesskey={{sesskey}}">{{#str}} exportascsv, otopo {{/str}}</a>
+        <a class="btn btn-danger ml-1 mr-1" href="{{config.wwwroot}}/mod/otopo/templates.php?id={{template.id}}&action=delete{{#cmid}}&cmid={{cmid}}{{/cmid}}&sesskey={{sesskey}}">{{#str}} delete {{/str}}</a>
+        <a class="btn btn-primary ml-1 mr-1" href="{{config.wwwroot}}/mod/otopo/templates.php?id={{template.id}}&action=edit{{#cmid}}&cmid={{cmid}}{{/cmid}}&sesskey={{sesskey}}">{{#str}} edit {{/str}}</a>
     </div>
 {{/edit}}
 {{/template}}
@@ -67,10 +67,10 @@
                         <td>{{ name }}</td>
                         <td>
                             <div class="d-flex flex-row justify-content-start">
-                                <a class="btn btn-default ml-1 mr-1" href="{{config.wwwroot}}/mod/otopo/templates.php?id={{id}}&action=export{{#cmid}}&cmid={{cmid}}{{/cmid}}">{{#str}} exportascsv, otopo {{/str}}</a>
-                                <a class="btn btn-danger ml-1 mr-1" href="{{config.wwwroot}}/mod/otopo/templates.php?id={{id}}&action=delete{{#cmid}}&cmid={{cmid}}{{/cmid}}">{{#str}} delete {{/str}}</a>
+                                <a class="btn btn-default ml-1 mr-1" href="{{config.wwwroot}}/mod/otopo/templates.php?id={{id}}&action=export{{#cmid}}&cmid={{cmid}}{{/cmid}}&sesskey={{sesskey}}">{{#str}} exportascsv, otopo {{/str}}</a>
+                                <a class="btn btn-danger ml-1 mr-1" href="{{config.wwwroot}}/mod/otopo/templates.php?id={{id}}&action=delete{{#cmid}}&cmid={{cmid}}{{/cmid}}&sesskey={{sesskey}}">{{#str}} delete {{/str}}</a>
                                 <a class="btn btn-default ml-1 mr-1" href="{{config.wwwroot}}/mod/otopo/templates.php?id={{id}}{{#cmid}}&cmid={{cmid}}{{/cmid}}">{{#str}} preview {{/str}}</a>
-                                <a class="btn btn-primary ml-1 mr-1" href="{{config.wwwroot}}/mod/otopo/templates.php?id={{id}}&action=edit{{#cmid}}&cmid={{cmid}}{{/cmid}}">{{#str}} edit {{/str}}</a>
+                                <a class="btn btn-primary ml-1 mr-1" href="{{config.wwwroot}}/mod/otopo/templates.php?id={{id}}&action=edit{{#cmid}}&cmid={{cmid}}{{/cmid}}&sesskey={{sesskey}}">{{#str}} edit {{/str}}</a>
                             </div>
                         </td>
                     </tr>
@@ -79,7 +79,7 @@
         </table>
     </div>
     <div class="d-flex flex-row justify-content-end mt-2">
-        <a class="btn btn-primary ml-1 mr-1" href="{{config.wwwroot}}/mod/otopo/templates.php?action=create{{#cmid}}&cmid={{cmid}}{{/cmid}}">{{#str}} create {{/str}}</a>
+        <a class="btn btn-primary ml-1 mr-1" href="{{config.wwwroot}}/mod/otopo/templates.php?action=create{{#cmid}}&cmid={{cmid}}{{/cmid}}&sesskey={{sesskey}}">{{#str}} create {{/str}}</a>
     </div>
 {{/create}}
 {{/template}}

@@ -41,8 +41,6 @@ class fromtemplate_form extends moodleform {
      * Add elements to form.
      */
     public function definition() {
-        global $CFG, $DB, $PAGE, $OUTPUT;
-
         $mform = $this->_form;
 
         $mform->addElement('hidden', 'id', $this->_customdata['id']);
@@ -53,6 +51,9 @@ class fromtemplate_form extends moodleform {
 
         $mform->addElement('hidden', 'object', 'templates');
         $mform->setType('object', PARAM_TEXT);
+
+        $mform->addElement('hidden', 'sesskey', $this->_customdata['sesskey']);
+        $mform->setType('sesskey', PARAM_TEXT);
 
         $templates = $this->_customdata['templates'];
         $templatesselect = [];

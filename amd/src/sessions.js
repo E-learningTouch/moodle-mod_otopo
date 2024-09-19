@@ -37,7 +37,8 @@ define(['vue', 'mod_otopo/color'], function(Vue, ColorPicker) {
                     document.getElementsByName('option_repeats')[0].value--;
                 } else {
                     location.href = wwwroot + '/mod/otopo/view.php?o=' + o
-                        + "&action=edit&object=sessions&session-delete=" + session;
+                        + "&action=edit&object=sessions&session-delete=" + session
+                        + "&sesskey=" + M.cfg.sesskey;
                 }
             }));
         },

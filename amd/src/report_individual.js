@@ -81,7 +81,8 @@ define([], function() {
                     if (!exportBtn.classList.contains('disabled')) {
                         const sessionsEnabled = getSessionsEnabled();
                         location.href = wwwroot + "/mod/otopo/view.php?id=" + cmid + "&action=export&object=individual&sessions="
-                            + sessionsEnabled.join(',');
+                            + sessionsEnabled.join(',')
+                            + '&sesskey=' + M.cfg.sesskey;
                     }
                 });
             }

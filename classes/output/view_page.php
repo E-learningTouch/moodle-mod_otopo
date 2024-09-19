@@ -155,6 +155,7 @@ class view_page implements renderable, templatable {
         }
         $data->cm = $this->cm;
         $data->otopo = $this->otopo;
+        $data->sesskey = sesskey();
         return $data;
     }
 }
