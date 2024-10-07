@@ -3,6 +3,18 @@ description: Suggest an idea
 title: "[Feature]: "
 labels: ["feature request", "enhancement", "feature"]
 body:
+  - type: markdown
+    attributes:
+      value: |
+        :earth_americas: **English Only**
+        
+        To maintain a welcoming and inclusive environment for everyone, please fill out this issue in English.
+        
+        This helps ensure that all contributors can easily understand and engage in the conversation.
+        
+        Thank you for your understanding! :handshake::star2:
+
+        ---
   - type: checkboxes
     id: terms
     attributes:
