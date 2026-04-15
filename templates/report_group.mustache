@@ -1,0 +1,58 @@
+{{!
+    This file is part of Moodle - https://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template mod_otopo/report_group
+
+    The template HTML for the group table.
+}}
+{{#hasdistribution}}
+    <h4>{{#str}} studentdistributionbyitem, otopo {{/str}} :</h4>
+<canvas data-users="{{users}}" id="chart"></canvas>
+<div class="mt-5">
+    <div class="table-responsive">
+        <table class="flexible table table-striped table-hover generaltable generalbox">
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    {{#items}}
+                        <th scope="col" class="text-center" style="color: {{color}};">{{#str}} itemitem, otopo {{/str}} {{index}}<br>{{ name }}</th>
+                    {{/items}}
+                </tr>
+            </thead>
+            <tbody>
+                {{#distribution}}
+                <tr>
+                    <th scope="row">{{#str}} autoevaldegree, otopo {{/str}}&nbsp;{{degree}}</th>
+                    {{#data}}
+                        <td class="text-center">{{value}}</td>
+                    {{/data}}
+                </tr>
+                {{/distribution}}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="d-flex justify-content-end mt-3">
+    {{#canexportresults}}
+        <a class="btn-otopo ml-5 mr-2 no-print" href="#" onclick="window.print()">{{#str}} print, otopo {{/str}}</a>
+        <a id="export-csv" class="btn-otopo ml-2 mr-5 no-print" data-cmid="{{cmid}}" href="#">{{#str}} exportascsv, otopo {{/str}}</a>
+    {{/canexportresults}}
+    {{^canexportresults}}
+        <a class="btn-otopo ml-5 mr-5 no-print" href="#" onclick="window.print()">{{#str}} print, otopo {{/str}}</a>
+    {{/canexportresults}}
+</div>
+{{/hasdistribution}}

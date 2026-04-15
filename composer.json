@@ -1,0 +1,15 @@
+{
+    "name": "elearningtouch/mod_otopo",
+    "description": "Moodle activity that allows students to self-assess and track their progress in a course.",
+    "type": "moodle-mod",
+    "license": "GPL-3.0-or-later",
+    "autoload": {
+        "psr-4": {
+            "mod_otopo\\": "classes/"
+        }
+    },
+    "require": {},
+    "extra": {
+        "installer-name": "mod_otopo"
+    }
+}
