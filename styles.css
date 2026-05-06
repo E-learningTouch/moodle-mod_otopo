@@ -453,3 +453,12 @@
     position: absolute;
     max-height: 180px;
 }
+
+.otopo-sessions-list .otopo-sessions-label {
+    scrollbar-width: none;
+    padding-bottom: .4rem;
+}
+
+.otopo-sessions-list .otopo-sessions-lock {
+   padding-bottom: .8rem;
+}

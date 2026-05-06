@@ -144,7 +144,7 @@
             {{#showotopos}}
                 <div class="otopo-per-session otopo-sessions-list mb-3">
                     <hr class="otopo-separator">
-                    <div class="row text-nowrap">
+                    <div class="row text-nowrap otopo-sessions-label">
                         {{#sessions}}
                             <div class="col-6 col-sm-4 col-md-3 col-lg-2">
                                 <h5 class="text-center otopo font-weight-bold"><a class="otopo" href="{{config.wwwroot}}/mod/otopo/view.php?id={{cm.id}}&action=evaluate&session={{id}}&sesskey={{sesskey}}">{{displayname}}{{^last}} >{{/last}}</a></h5>
@@ -152,7 +152,7 @@
                         {{/sessions}}
                     </div>
                     <hr class="otopo-separator">
-                    <div class="row text-nowrap">
+                    <div class="row text-nowrap otopo-sessions-lock">
                         {{#sessions}}
                             <div class="col-6 col-sm-4 col-md-3 col-lg-2">
                                 <div class="d-flex justify-content-center">
