@@ -1586,11 +1586,15 @@ class mod_otopo_external extends external_api
         $data     = [];
         parse_str(json_decode($params['jsonformdata']), $data);
 
+        $grader = (object) $data;
+        $grader->userid = $userid;
+        $grader->session = $session;
+
         $mform = new grade_form(
             null,
             [
                 'otopo'  => $o,
-                'grader' => (object) $data,
+                'grader' =>$grader,
             ],
             'post',
             '',
