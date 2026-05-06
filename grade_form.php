@@ -56,8 +56,8 @@ class grade_form extends moodleform
         $data        = $this->_customdata['grader'];
 
         $mform = $this->_form;
-        $mform->setAttributes(['class' => 'gradeform']);
-
+        $mform->setAttributes(['class' => 'gradeform', 'id' => $this->otopo->id]);
+       
         if ($this->_customdata['disabled']) {
             $mform->addElement(
                 'textarea',
