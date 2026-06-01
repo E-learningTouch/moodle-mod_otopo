@@ -14,6 +14,8 @@ Additionally, make sure to acknowledge all contributors by adding their names to
 
 ## Table of Contents
 
+- [2.0.1](#2.0.1)
+- [2.0.0](#2.0.0)
 - [1.1.1](#1.1.1)
 - [1.1.0](#1.1.0)
 - [1.0.14](#1.0.14)
@@ -22,6 +24,21 @@ Additionally, make sure to acknowledge all contributors by adding their names to
 - [1.0.11](#1.0.11)
 - [1.0.10](#1.0.10)
 - [1.0.9](#1.0.9)
+
+## 2.0.1
+
+### Fixed
+
+- Import errors and deprecated functions
+- Error on the teacher's assessment page
+- Fixing a JavaScript error on the teacher assessment page
+- Improves the layout in the plugin's main view
+
+## 2.0.0
+
+### Fixed
+
+- Moodle 5.x compatibility
 
 ## 1.1.1
 
