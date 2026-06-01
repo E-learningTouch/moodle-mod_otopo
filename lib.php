@@ -478,6 +478,16 @@ function mod_otopo_output_fragment_gradingpanel(array $args)
     }
 
     $otoposforms = array_values($otoposforms);
+  
+    if($grader) {
+        $session->isEvaluated = true;
+    } else {  //no grade in DB : session is not evaluated yet
+        $session->isEvaluated = false;
+        //need those parameters for form initialisation (formname : qf_formgrade_{userid}_{session_id})
+        $grader = (object) [];
+        $grader->userid = $userid;
+        $grader->session = $sessionid;
+    }
 
     $globalform = [
         'title'        => get_string('autoeval', 'otopo').' '.$session->key,
@@ -491,7 +501,7 @@ function mod_otopo_output_fragment_gradingpanel(array $args)
             ]
         ))->render(),
         'validated'    => $session->isvalidorclosed,
-        'notevaluated' => !$grader->grade,
+        'notevaluated' => !$session->isEvaluated,
     ];
 
     return $OUTPUT->render_from_template(

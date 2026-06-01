@@ -24,8 +24,8 @@
  */
 define(['jquery', 'core/yui', 'core/notification', 'core/templates', 'core/fragment',
         'core/ajax', 'core/str', 'mod_assign/grading_form_change_checker',
-        'mod_assign/grading_events', 'core/event'],
-       function($, Y, notification, templates, fragment, ajax, str, checker, GradingEvents, Event) {
+        'mod_assign/grading_events', 'core_form/events', 'core_form/changechecker'],
+       function($, Y, notification, templates, fragment, ajax, str, checker, GradingEvents, FormEvents, FormChangeChecker) {
 
     /**
      * GradingPanel class.
@@ -101,6 +101,7 @@ define(['jquery', 'core/yui', 'core/notification', 'core/templates', 'core/fragm
      * @param {Number} nextUserId
      * @param {Boolean} nextUser optional. Load next user in the grading list.
      * @method _submitForm
+     * @fires event:formSubmittedByJavascript
      */
     GradingPanel.prototype._submitForm = function(event, nextUserId, nextUser) {
         // The form was submitted - send it via ajax instead.
@@ -108,11 +109,14 @@ define(['jquery', 'core/yui', 'core/notification', 'core/templates', 'core/fragm
 
         $('[data-region="overlay"]').show();
 
+        // Mark the form as submitted in the change checker.
+        FormChangeChecker.markFormSubmitted(form[0]);
+
         // We call this, so other modules can update the form with the latest state.
         form.trigger('save-form-state');
 
         // Tell all form fields we are about to submit the form.
-        Event.notifyFormSubmitAjax(form[0]);
+        FormEvents.notifyFormSubmittedByJavascript(form[0]);
 
         // Now we get all the current values from the form.
         var data = form.serialize();
@@ -159,9 +163,11 @@ define(['jquery', 'core/yui', 'core/notification', 'core/templates', 'core/fragm
             ]).done(function(strs) {
                 notification.alert(strs[0], strs[1]);
             }).fail(notification.exception);
-            Y.use('moodle-core-formchangechecker', function() {
-                M.core_formchangechecker.reset_form_dirty_state();
-            });
+
+            // Reset the form state.
+            var form = $(this._region.find('form.gradeform'));
+            FormChangeChecker.resetFormDirtyState(form[0]);
+
             if (nextUserId == this._lastUserId) {
                 $(document).trigger('reset', [nextUserId, this._lastSession]);
             } else if (nextUser) {
