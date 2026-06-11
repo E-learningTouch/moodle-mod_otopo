@@ -49,9 +49,12 @@ define([
             if (shouldFetchPrevious) {
                 console.log("Missing data (justification or degree) => let's fetch session-1");
                 const currentSession = this.$root.$data.session;
-                const prevSession = currentSession - 1;
-                
-                if (prevSession > 0) {
+                // Imposed sessions use positive, increasing ids (previous = currentSession - 1).
+                // Open sessions use negative, decreasing ids (previous = currentSession + 1).
+                const prevSession = currentSession > 0 ? (currentSession - 1) : (currentSession + 1);
+                const hasPrevSession = currentSession > 0 ? (prevSession > 0) : (prevSession < 0);
+
+                if (hasPrevSession) {
                     ajax.getUserOtopo(this.$root.$data.otopo, prevSession)
                         .then(prevData => {
                             console.log("prevData for session", prevSession, "=", prevData);
