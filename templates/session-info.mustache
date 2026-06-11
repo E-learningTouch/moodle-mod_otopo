@@ -1,0 +1,79 @@
+{{!
+    This file is part of Moodle - https://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template mod_otopo/session-info
+
+    The template HTML displaying a session info.
+}}
+{{#progressorevolution}}
+    <div class="d-flex flex-column">
+        <p>
+            {{#otopo.allowsubmissionfromdate}}{{#str}} fillfrom, otopo {{/str}} {{ fromdate }} {{/otopo.allowsubmissionfromdate}}
+            {{#otopo.allowsubmissiontodate}}{{#str}} fillto, otopo {{/str}} {{ todate }} {{/otopo.allowsubmissiontodate}}
+        </p>
+        {{#haslastmodification}}
+            <p>{{#str}} lastmodification, otopo {{/str}} : {{ lastmodification }}</p>
+        {{/haslastmodification}}
+    </div>
+{{/progressorevolution}}
+
+{{#evaluate}}
+    <div class="row d-flex flex-row justify-content-between session-info">
+        <div class="col-sm-6 d-flex flex-row align-items-center">
+            {{^sessionvalidorclosed}}
+                <div>
+                    <i class="star-icon star-icon-yellow fa fa-star"></i>
+                </div>
+                <div>
+                    <p>{{#str}} pending, otopo {{/str}}</p>
+                </div>
+            {{/sessionvalidorclosed}}
+
+            {{#sessionvalidorclosed}}
+                {{#sessionvalid}}
+                    <div>
+                        <i class="star-icon star-icon-green fa fa-star"></i>
+                    </div>
+                    <div>
+                        <p>{{#str}} validated, otopo {{/str}}</p>
+                    </div>
+                {{/sessionvalid}}
+
+                {{^sessionvalid}}
+                    <div>
+                        <i class="star-icon star-icon-red fa fa-star"></i>
+                    </div>
+                    <div>
+                        <p>{{#str}} closed, otopo {{/str}}</p>
+                    </div>
+                {{/sessionvalid}}
+            {{/sessionvalidorclosed}}
+
+        </div>
+        <div class="col-sm-6">
+            {{#otopo.session}}
+                {{#session}}
+                    <p>{{#allowsubmissionfromdate}}{{#str}} fillfrom, otopo {{/str}} {{ sessionfromdate }} {{/allowsubmissionfromdate}}</p>
+                    <p>{{#allowsubmissiontodate}}{{#str}} fillto, otopo {{/str}} {{ sessiontodate }} {{/allowsubmissiontodate}}</p>
+                {{/session}}
+            {{/otopo.session}}
+            {{#haslastmodificationonsession}}
+                <p>{{#str}} lastmodification, otopo {{/str}} : {{ lastmodificationonsession }}</p>
+            {{/haslastmodificationonsession}}
+        </div>
+    </div>
+{{/evaluate}}
