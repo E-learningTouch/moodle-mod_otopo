@@ -65,7 +65,7 @@ $string['autoevalyourjustification'] = 'Votre justification...';
 $string['autoevalnoteachercomment']  = 'Votre enseignant n\'a pas encore commenté.';
 $string['autoevalmodalsubtitle']     = 'Justifiez en quelques lignes votre positionnement.';
 $string['autoevalmodalcontent']      = 'Par exemple :';
-$string['autoevalmodalcontent1']     = 'Quels outils utilisées à quelle étape ?';
+$string['autoevalmodalcontent1']     = 'Quels outils utilisés à quelle étape ?';
 $string['autoevalmodalcontent2']     = 'Quelles méthodes utilisées à quelle étape ?';
 $string['autoevaldegree']            = 'Degré';
 $string['autoevaldescription']       = 'Description';
@@ -84,7 +84,7 @@ $string['grade'] = 'Note';
 
 $string['sessionoptions'] = 'Options de sessions';
 $string['session']        = 'Session';
-$string['session_help'] = 'Si **Session limitée** : les étudiants devront s\'auto-positionner sur les sessions que vous aurez définies, si **Session libre** : les étudiants pourront s\'auto-positionner autant de fois qu\'ils le souhaitent, dans la limite de sessions définie.';
+$string['session_help'] = 'Si **Session limitée** : les étudiants devront s\'auto-positionner sur les sessions que vous aurez définies, si **Session libre** : les étudiants pourront s\'auto-positionner autant de fois qu\'ils le souhaitent, dans la limite des sessions définies.';
 $string['sessionopen']    = 'Session libre';
 $string['sessionlimited'] = 'Session imposée';
 $string['sessions']       = 'Nombre de sessions';
@@ -114,7 +114,7 @@ $string['defaultsessionvisual_desc']       = 'Permet de changer la valeur par d�
 $string['defaultcohortvisual']             = 'Valeur par défaut pour le choix du visuel des cohortes';
 $string['defaultcohortvisual_desc']        = 'Permet de changer la valeur par défaut pour le visuel des cohortes lors de la création de l\'activité.';
 $string['defaultsessions']                 = 'Nombre de sessions par défaut';
-$string['defaultsessions_desc']            = 'Permet de changer la valeur par défaut pour le nombre de sessions lors de la création de l\'activité avec **Session ouverte**.';
+$string['defaultsessions_desc']            = 'Permet de changer la valeur par défaut pour le nombre de sessions lors de la création de l\'activité avec **Session libre**.';
 $string['defaultlimitsessions']            = 'Nombre limite de sessions par défaut';
 $string['defaultlimitsessions_desc']       = 'Permet de changer la valeur par défaut pour le nombre de sessions limite lors de la création de l\'activité.';
 $string['defaultsessionscalendar']         = 'Calendrier des sessions';
@@ -147,8 +147,8 @@ $string['menugrid']             = 'Grille';
  * View fill page. *
  */
 $string['fill']              = 'M\'auto-évaluer';
-$string['fillintro']         = 'Vous allez commencer votre auto-évaluation avec OTOPO. Vous trouverez la grille générale que vous utiliserez durant toute cette activité en cliquant sur l\'icone "Ma grille d\'évaluation générale" ci-dessus. Les éléments d\'évaluation qui vous seront proposés sont consititués d\'items avec plusieurs niveaux d\'appréciation. Il vous revient d\'estimer le niveau que vous avez atteint lors vos auto-évaluations.';
-$string['fillencouragement'] = 'Bon courage!';
+$string['fillintro']         = 'Vous allez commencer votre auto-évaluation avec OTOPO. Vous trouverez la grille générale que vous utiliserez durant toute cette activité en cliquant sur l\'icone "Ma grille d\'évaluation générale" ci-dessus. Les éléments d\'évaluation qui vous seront proposés sont consititués d\'items avec plusieurs niveaux d\'appréciation. Il vous revient d\'estimer le niveau que vous avez atteint lors de vos auto-évaluations.';
+$string['fillencouragement'] = 'Bon courage !';
 $string['fillmyprogression'] = 'Ma progression';
 $string['fillmyevolution']   = 'Mon évolution';
 $string['fillfrom']          = 'du';
