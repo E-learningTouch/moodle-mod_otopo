@@ -122,43 +122,45 @@ define(['mod_otopo/otopo/components/degree-modal'], function(DegreeModalHelp) {
         template: `
             <div class="row" v-if="this.degrees.length > 0">
                 <div class="col-xl-6 no-print">
-                    <div class="d-flex flex-column justify-content-center degree-star-container">
-                        <div class="d-flex flex-row align-items-center justify-content-center">
-                            <div class="d-flex align-items-center justify-content-center degree-action degree-action-left">
-                                <img :src="images.minus" class="img-responsive invisible" />
-                            </div>
-                            <div class="d-flex align-items-center justify-content-center degree-container">
-                                <div
-                                    class="degree-star-mask"
-                                    :style="'width: ' + starWidth + '%;\
-                                        -webkit-mask-image: url(' + images.star + ');\
-                                        mask-image: url(' + images.star + ');'"
-                                >
+                    <div class="degree-star-stack">
+                        <div class="d-flex flex-column justify-content-center degree-star-container">
+                            <div class="d-flex flex-row align-items-center justify-content-center">
+                                <div class="d-flex align-items-center justify-content-center degree-action degree-action-left">
+                                    <img :src="images.minus" class="img-responsive invisible" />
+                                </div>
+                                <div class="d-flex align-items-center justify-content-center degree-container">
                                     <div
-                                        :style="'background-color: ' + color + ';\
-                                            background: rgb(255,255,255);\
-                                            background: linear-gradient(90deg, rgba(255,255,255,1) 0%, ' + color + ' 100%);'"
+                                        class="degree-star-mask"
+                                        :style="'width: ' + starWidth + '%;\
+                                            -webkit-mask-image: url(' + images.star + ');\
+                                            mask-image: url(' + images.star + ');'"
                                     >
-                                        <img :src="images.starContainer" class="img-responsive invisible" />
+                                        <div
+                                            :style="'background-color: ' + color + ';\
+                                                background: rgb(255,255,255);\
+                                                background: linear-gradient(90deg, rgba(255,255,255,1) 0%, ' + color + ' 100%);'"
+                                        >
+                                            <img :src="images.starContainer" class="img-responsive invisible" />
+                                        </div>
                                     </div>
                                 </div>
+                                <div class="d-flex align-items-center justify-content-center degree-action degree-action-right">
+                                    <img :src="images.plus" class="img-responsive invisible" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-center degree-background-container">
+                            <div class="d-flex align-items-center justify-content-center degree-action degree-action-left">
+                                <img :src="images.minus" class="img-responsive" v-if="selected != null" v-on:click="selectPrevious" />
+                            </div>
+                            <div class="d-flex align-items-center justify-content-center degree-container">
+                                <img :src="images.starContainer" class="img-responsive" />
                             </div>
                             <div class="d-flex align-items-center justify-content-center degree-action degree-action-right">
-                                <img :src="images.plus" class="img-responsive invisible" />
+                                <img :src="images.plus" class="img-responsive"
+                                    v-if="selected == null || selected < this.degrees.length - 1" v-on:click="selectNext"
+                                />
                             </div>
-                        </div>
-                    </div>
-                    <div class="d-flex flex-row justify-content-center degree-background-container">
-                        <div class="d-flex align-items-center justify-content-center degree-action degree-action-left">
-                            <img :src="images.minus" class="img-responsive" v-if="selected != null" v-on:click="selectPrevious" />
-                        </div>
-                        <div class="d-flex align-items-center justify-content-center degree-container">
-                            <img :src="images.starContainer" class="img-responsive" />
-                        </div>
-                        <div class="d-flex align-items-center justify-content-center degree-action degree-action-right">
-                            <img :src="images.plus" class="img-responsive"
-                                v-if="selected == null || selected < this.degrees.length - 1" v-on:click="selectNext"
-                            />
                         </div>
                     </div>
                     <div class="d-flex align-items-center justify-content-center">

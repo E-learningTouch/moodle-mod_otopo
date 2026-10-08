@@ -174,25 +174,27 @@
                         <div class="row mb-3">
                             {{#results}}
                                 <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-                                    {{#width}}
-                                        <div class="d-flex flex-column justify-content-center degree-star-container">
-                                            <div class="d-flex flex-row align-items-center justify-content-center">
-                                                <div class="d-flex align-items-center justify-content-center degree-container">
-                                                    <div
-                                                        class="degree-star-mask"
-                                                        style="width: {{ width }}%; -webkit-mask-image: url({{ star }}); mask-image: url({{ star }});"
-                                                    >
-                                                        <div style="background-color: {{ itemColor }}; background: rgb(255,255,255); background: linear-gradient(90deg, rgba(255,255,255,1) 0%, {{ itemColor }} 100%);">
-                                                            <img src="{{ starcontainer }}" class="img-responsive invisible" />
+                                    <div class="degree-star-stack">
+                                        {{#width}}
+                                            <div class="d-flex flex-column justify-content-center degree-star-container">
+                                                <div class="d-flex flex-row align-items-center justify-content-center">
+                                                    <div class="d-flex align-items-center justify-content-center degree-container">
+                                                        <div
+                                                            class="degree-star-mask"
+                                                            style="width: {{ width }}%; -webkit-mask-image: url({{ star }}); mask-image: url({{ star }});"
+                                                        >
+                                                            <div style="background-color: {{ itemColor }}; background: rgb(255,255,255); background: linear-gradient(90deg, rgba(255,255,255,1) 0%, {{ itemColor }} 100%);">
+                                                                <img src="{{ starcontainer }}" class="img-responsive invisible" />
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    {{/width}}
-                                    <div class="d-flex flex-row justify-content-center degree-background-container">
-                                        <div class="d-flex align-items-center justify-content-center degree-container">
-                                            <img src="{{starcontainer}}" class="img-responsive {{^degree}}img-darker{{/degree}}" />
+                                        {{/width}}
+                                        <div class="d-flex flex-row justify-content-center degree-background-container">
+                                            <div class="d-flex align-items-center justify-content-center degree-container">
+                                                <img src="{{starcontainer}}" class="img-responsive {{^degree}}img-darker{{/degree}}" />
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="d-flex align-items-center justify-content-center">
