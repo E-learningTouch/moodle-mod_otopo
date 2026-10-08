@@ -158,6 +158,10 @@ if ($canadmin || $cangrade || $canexportresults) {
 
         $PAGE->set_pagelayout('embedded');
         $PAGE->activityheader->disable();
+        // Moodle 5.3+: the course linear navigation sticky footer would cover the grade actions panel.
+        if (method_exists($PAGE, 'set_show_navigation_footer')) {
+            $PAGE->set_show_navigation_footer(false);
+        }
 
         $userid  = optional_param('user', 0, PARAM_INT);
         $session = optional_param('session', null, PARAM_INT);

@@ -98,9 +98,14 @@
     -moz-filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.75));
     -o-filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.75));
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.75));
-    height: 83%;
+    height: 100%;
     top: 0;
     left: 0;
+}
+
+/* The stack only wraps the background star, so the overlay matches it at any width. */
+.path-mod-otopo .degree-star-stack {
+    position: relative;
 }
 
 .path-mod-otopo .degree-desc {
@@ -315,14 +320,6 @@
     display: block;
 }
 
-.path-mod-otopo .preview_session > .row > .col-md-4 > .row > .col-xl-6 {
-    position: relative;
-}
-/* 
-.path-mod-otopo .preview_session > div > div.col-md-4 {
-    position: relative;
-} */
-
 .path-mod-otopo .otopo-per-session > .row > .col-6 {
     display: inline-block;
     position: relative;
@@ -440,18 +437,6 @@
 }
 .path-mod-otopo .nav-link.drag-title {
     padding-bottom: 0;
-}
-
-.row > .col-md-4 > .row > .col-xl-6 {
-    position: relative;
-}
-.row > .col-md-4 > .row > .col-xl-6 > .degree-star-container {
-    width: 100%;
-    height: 83%;
-    top: 0;
-    left: 0;
-    position: absolute;
-    max-height: 180px;
 }
 
 .otopo-sessions-list .otopo-sessions-label {
